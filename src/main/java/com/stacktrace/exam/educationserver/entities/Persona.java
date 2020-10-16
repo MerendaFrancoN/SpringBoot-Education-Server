@@ -41,7 +41,7 @@ public class Persona {
     private String telefono;
 
     @Enumerated(EnumType.STRING)
-    private SEX estado;
+    private SEX sexo;
 
     /*Getters and setters*/
     public String getDni() {
@@ -84,12 +84,12 @@ public class Persona {
         this.telefono = telefono;
     }
 
-    public SEX getEstado() {
-        return estado;
+    public SEX getSexo() {
+        return sexo;
     }
 
-    public void setEstado(SEX estado) {
-        this.estado = estado;
+    public void setSexo(SEX estado) {
+        this.sexo = estado;
     }
     public String getNombre() {
         return nombre;
