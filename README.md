@@ -1,2 +1,2 @@
-# education_server
-Springboot Application
+# Education Server
+Java - Springboot Application
