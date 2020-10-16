@@ -1,14 +1,15 @@
-package service;
+package com.stacktrace.exam.educationserver.service;
 
-import entities.Alumno;
+import com.stacktrace.exam.educationserver.entities.Alumno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.AlumnoRepository;
+import com.stacktrace.exam.educationserver.repository.AlumnoRepository;
 
 import java.util.List;
 
 @Service
 public class AlumnoService {
+
     @Autowired
     AlumnoRepository alumnoRepository;
 

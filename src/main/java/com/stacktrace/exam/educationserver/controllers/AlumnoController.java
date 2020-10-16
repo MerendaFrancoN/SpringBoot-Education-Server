@@ -1,10 +1,10 @@
-package controllers;
+package com.stacktrace.exam.educationserver.controllers;
 
-import entities.Alumno;
+import com.stacktrace.exam.educationserver.entities.Alumno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import service.AlumnoService;
+import com.stacktrace.exam.educationserver.service.AlumnoService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,8 +15,7 @@ public class AlumnoController {
     @Autowired
     AlumnoService alumnoService;
 
-    @GetMapping(value = "/alumnos")
-    @ResponseBody
+    @GetMapping(value = "/alumno")
     @ResponseStatus(HttpStatus.OK)
     public List<Alumno> getAll(){
         return alumnoService.getAll();
@@ -24,7 +23,6 @@ public class AlumnoController {
 
     @PostMapping(value = "/alumnos")
     @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
     public Object createClient(@RequestBody Alumno alumno) {
         Map<String, Object> mapResponse = new HashMap<>();
         mapResponse.put("id",alumnoService.saveAlumno(alumno).getDni());

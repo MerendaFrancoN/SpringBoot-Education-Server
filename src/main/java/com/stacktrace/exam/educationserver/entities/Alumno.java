@@ -1,4 +1,4 @@
-package entities;
+package com.stacktrace.exam.educationserver.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;

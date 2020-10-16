@@ -1,6 +1,6 @@
-package repository;
+package com.stacktrace.exam.educationserver.repository;
 
-import entities.Alumno;
+import com.stacktrace.exam.educationserver.entities.Alumno;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
