@@ -1,87 +1,28 @@
 package com.stacktrace.exam.educationserver.entities;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "alumnos", uniqueConstraints = {@UniqueConstraint(columnNames = {"dni"})})
-public class Alumno {
+public class Alumno extends Persona{
 
-    public enum SEX {
-        MASCULINO,
-        FEMENINO,
-        OTRO
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "cursos_alumnos",
+            joinColumns = {
+                    @JoinColumn(name = "alumno_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "curso_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)})
+    private List<Curso> cursos_tomados;
+
+    public List<Curso> getCursos_tomados() {
+        return cursos_tomados;
     }
 
-    public enum DNI_TYPE{
-        DNI,
-        LE,
-        LC,
-        CI
+    public void setCursos_tomados(List<Curso> cursos_tomados) {
+        this.cursos_tomados = cursos_tomados;
     }
-
-    public Alumno(){}
-
-    @Id
-    private String dni;
-
-    @Enumerated(EnumType.STRING)
-    private DNI_TYPE dni_tipo;
-
-    private LocalDate dateTime;
-    private String domicilio;
-    private String telefono;
-
-    @Enumerated(EnumType.STRING)
-    private SEX estado;
-
-    /*Getters and setters*/
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public DNI_TYPE getDni_tipo() {
-        return dni_tipo;
-    }
-
-    public void setDni_tipo(DNI_TYPE dni_tipo) {
-        this.dni_tipo = dni_tipo;
-    }
-
-    public LocalDate getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDate dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public String getDomicilio() {
-        return domicilio;
-    }
-
-    public void setDomicilio(String domicilio) {
-        this.domicilio = domicilio;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public SEX getEstado() {
-        return estado;
-    }
-
-    public void setEstado(SEX estado) {
-        this.estado = estado;
-    }
-
 }
