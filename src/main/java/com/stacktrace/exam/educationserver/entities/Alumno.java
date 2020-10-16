@@ -8,6 +8,7 @@ import java.util.List;
 public class Alumno extends Persona{
 
 
+    //Table cursos_alumnos will hold data from join between cursos and alumnos
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "cursos_alumnos",
             joinColumns = {
