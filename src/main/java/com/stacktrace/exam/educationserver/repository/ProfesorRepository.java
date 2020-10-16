@@ -1,4 +1,9 @@
 package com.stacktrace.exam.educationserver.repository;
 
-public interface ProfesorRepository {
+import com.stacktrace.exam.educationserver.entities.Profesor;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
+
+public interface ProfesorRepository extends JpaRepository<Profesor, Integer> {
+    Profesor findByDni(@Param("dni") String dni);
 }
