@@ -1,10 +1,10 @@
 package com.stacktrace.exam.educationserver.controllers;
 
 import com.stacktrace.exam.educationserver.entities.Alumno;
+import com.stacktrace.exam.educationserver.service.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import com.stacktrace.exam.educationserver.service.AlumnoService;
 
 import java.util.HashMap;
 import java.util.List;
