@@ -1,5 +1,7 @@
 package com.stacktrace.exam.educationserver.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -32,6 +34,8 @@ public class Persona {
     private DNI_TYPE dni_tipo;
     private String nombre;
     private String apellido;
+
+    @JsonFormat(pattern="dd-MM-yyyy")
     private LocalDate fecha_de_nacimiento;
     private String domicilio;
     private String telefono;
