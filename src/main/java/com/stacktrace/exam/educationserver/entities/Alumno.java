@@ -7,10 +7,17 @@ import java.time.LocalDate;
 @Table(name = "alumnos", uniqueConstraints = {@UniqueConstraint(columnNames = {"dni"})})
 public class Alumno {
 
-    public enum Sex {
+    public enum SEX {
         MASCULINO,
         FEMENINO,
         OTRO
+    }
+
+    public enum DNI_TYPE{
+        DNI,
+        LE,
+        LC,
+        CI
     }
 
     public Alumno(){}
@@ -18,13 +25,15 @@ public class Alumno {
     @Id
     private String dni;
 
-    private String dni_tipo;
+    @Enumerated(EnumType.STRING)
+    private DNI_TYPE dni_tipo;
+
     private LocalDate dateTime;
     private String domicilio;
     private String telefono;
 
     @Enumerated(EnumType.STRING)
-    private Sex estado;
+    private SEX estado;
 
     /*Getters and setters*/
     public String getDni() {
@@ -35,11 +44,11 @@ public class Alumno {
         this.dni = dni;
     }
 
-    public String getDni_tipo() {
+    public DNI_TYPE getDni_tipo() {
         return dni_tipo;
     }
 
-    public void setDni_tipo(String dni_tipo) {
+    public void setDni_tipo(DNI_TYPE dni_tipo) {
         this.dni_tipo = dni_tipo;
     }
 
@@ -67,11 +76,11 @@ public class Alumno {
         this.telefono = telefono;
     }
 
-    public Sex getEstado() {
+    public SEX getEstado() {
         return estado;
     }
 
-    public void setEstado(Sex estado) {
+    public void setEstado(SEX estado) {
         this.estado = estado;
     }
 

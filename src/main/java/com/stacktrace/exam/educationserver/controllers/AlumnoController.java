@@ -15,7 +15,8 @@ public class AlumnoController {
     @Autowired
     AlumnoService alumnoService;
 
-    @GetMapping(value = "/alumno")
+    @GetMapping(value = "/alumnos")
+    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public List<Alumno> getAll(){
         return alumnoService.getAll();
