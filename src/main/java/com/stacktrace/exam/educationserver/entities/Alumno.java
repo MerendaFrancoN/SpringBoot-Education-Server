@@ -2,6 +2,7 @@ package com.stacktrace.exam.educationserver.entities;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "alumnos", uniqueConstraints = {@UniqueConstraint(columnNames = {"dni"})})
@@ -17,13 +18,13 @@ public class Alumno extends Persona{
             inverseJoinColumns = {
                     @JoinColumn(name = "curso_id", referencedColumnName = "id",
                             nullable = false, updatable = false)})
-    private List<Curso> cursos_tomados;
+    private Set<Curso> cursos_tomados;
 
-    public List<Curso> getCursos_tomados() {
+    public Set<Curso> getCursos_tomados() {
         return cursos_tomados;
     }
 
-    public void setCursos_tomados(List<Curso> cursos_tomados) {
+    public void setCursos_tomados(Set<Curso> cursos_tomados) {
         this.cursos_tomados = cursos_tomados;
     }
 }

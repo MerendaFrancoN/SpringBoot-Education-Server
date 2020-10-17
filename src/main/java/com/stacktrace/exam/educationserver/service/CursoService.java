@@ -68,7 +68,6 @@ public class CursoService {
             Alumno alumno = alumnoRepository.findByDni(alumnoDNI);
             alumno.getCursos_tomados().add(curso);
         });
-
         return curso;
     }
 
