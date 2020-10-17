@@ -47,9 +47,10 @@ public class NotaController {
             if(notaDTO.getAlumno_dni()!= null) notaToBeUpdated.get().setAlumno_dni(notaDTO.getAlumno_dni());
             if(notaDTO.getCurso_id()!= null) notaToBeUpdated.get().setCurso_id(notaDTO.getCurso_id());
 
-            return new ResponseEntity<>(notaToBeUpdated, HttpStatus.OK);
+            return new ResponseEntity<>("", HttpStatus.OK);
         }
-        return new ResponseEntity<>(new ResponseError(404, String.format("Nota con id %s no encontrada", notaDTO.getId())), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(
+                new ResponseError(404, String.format("Nota con id %s no encontrada", notaDTO.getId())), HttpStatus.NOT_FOUND);
 
     }
 

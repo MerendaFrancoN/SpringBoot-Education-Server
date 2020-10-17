@@ -60,11 +60,16 @@ public class CursoController {
             CursoDTO updatedCurso = cursoService.saveUpdateCurso(cursoReqBody);
 
             if ( updatedCurso == null) {
-                return new ResponseEntity<>(new ResponseError(404, String.format("Curso con ID %d No encontrado", cursoReqBody.getId())), HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(
+                        new ResponseError(404, String.format("Curso con ID %d No encontrado",
+                        cursoReqBody.getId())), HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(updatedCurso, HttpStatus.OK);
+            return new ResponseEntity<>("", HttpStatus.OK);
         }
-        return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(new ResponseError(404, String.format("Curso con ID %d No encontrado",
+                        cursoReqBody.getId())), HttpStatus.NOT_FOUND);
+
     }
 
     @GetMapping(value = "/cursos/get_alumnos")

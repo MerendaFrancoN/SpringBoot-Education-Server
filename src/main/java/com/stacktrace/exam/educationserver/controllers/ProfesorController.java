@@ -50,7 +50,6 @@ public class ProfesorController {
     @ResponseBody
     public Object updateProfesor(@RequestBody ProfesorDTO profesorDTO) {
 
-        Map<String, Object> mapResponse = new HashMap<>();
         ProfesorDTO profesorToBeUpdated = profesorService.getProfesor(profesorDTO.getDni());
 
         if(profesorDTO.getNombre() != null)
