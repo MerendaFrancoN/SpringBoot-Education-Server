@@ -1,5 +1,6 @@
 package com.stacktrace.exam.educationserver.entities.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stacktrace.exam.educationserver.entities.Alumno;
 import com.stacktrace.exam.educationserver.entities.Curso;
 import com.stacktrace.exam.educationserver.entities.Nota;
@@ -29,7 +30,10 @@ public class CursoDTO {
         this.setNota_aprobacion(curso.getNota_aprobacion());
         this.setAlumnos(curso.getAlumnosEnlistados().stream()
                 .map(Alumno::getDni).collect(Collectors.toSet()));
-        this.setLista_notas(curso.getLista_notas().stream().map(Nota::getId).collect(Collectors.toList()));
+
+        if(curso.getLista_notas() != null)
+            this.setLista_notas(curso.getLista_notas().stream()
+                    .map(Nota::getId).collect(Collectors.toList()));
 
         try{
             if(curso.getDictadoPor().getDni().equals(""))

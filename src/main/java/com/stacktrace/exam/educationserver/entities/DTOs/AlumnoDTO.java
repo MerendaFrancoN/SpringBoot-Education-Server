@@ -1,5 +1,6 @@
 package com.stacktrace.exam.educationserver.entities.DTOs;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stacktrace.exam.educationserver.entities.Alumno;
 import com.stacktrace.exam.educationserver.entities.Curso;
 import com.stacktrace.exam.educationserver.entities.Nota;
@@ -30,9 +31,11 @@ public class AlumnoDTO extends PersonaDTO{
         super.setSexo(alumno.getSexo());
         this.getCursos_tomados().addAll(alumno.getCursos_tomados()
                 .stream().map(Curso::getId).collect(Collectors.toSet()));
-        this.getLista_notas().addAll(alumno.getLista_notas()
-                .stream().map(Nota::getId).collect(Collectors.toList()));
 
+        if(alumno.getLista_notas() != null) {
+            this.getLista_notas().addAll(alumno.getLista_notas()
+                .stream().map(Nota::getId).collect(Collectors.toList()));
+        }
     }
 
     public Set<Integer> getCursos_tomados() {
