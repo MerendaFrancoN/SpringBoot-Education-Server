@@ -67,7 +67,7 @@ public class CursoController {
         return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/cursos/busqueda")
+    @GetMapping(value = "/cursos/get_alumnos")
     @ResponseBody
     public Object searchAlumnos(@RequestParam("curso_id") Integer id) {
         Optional<CursoDTO> cursoOptional = cursoService.getCurso(id);
