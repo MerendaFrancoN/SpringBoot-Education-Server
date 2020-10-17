@@ -40,7 +40,6 @@ public class NotaController {
     @ResponseBody
     public Object updateNota(@RequestBody NotaDTO notaDTO) {
 
-        Map<String, Object> mapResponse = new HashMap<>();
         Optional<NotaDTO> notaToBeUpdated = notaService.getNotaById(notaDTO.getId());
 
         if ( notaToBeUpdated.isPresent()) {
