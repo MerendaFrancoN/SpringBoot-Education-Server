@@ -31,19 +31,21 @@ public class CursoController {
         return  mapResponse;
     }
 
-    @PutMapping(value = "/cursos/{id}")
+
+    @PutMapping("/cursos/{id}")
     @ResponseBody
-    public Object updateCurso(@RequestBody Curso curso, @PathVariable Integer id) {
+    public Object updateCurso(@RequestBody CursoDTO curso, @PathVariable Integer id) {
 
         Map<String, Object> mapResponse = new HashMap<>();
+
         curso.setId(id);
-        Curso updatedCurso = cursoService.updateCurso(curso);
+        CursoDTO updatedCurso = cursoService.updateCurso(curso);
 
         if ( updatedCurso == null) {
             return new ResponseEntity<>(new ResponseError(404, String.format("Curso con ID %d No encontrado", curso.getId())), HttpStatus.NOT_FOUND);
         }
         mapResponse.put("nombre",updatedCurso.getNombre());
-        mapResponse.put("alumnosEnlistados", updatedCurso.getAlumnosEnlistados());
+        mapResponse.put("alumnosEnlistados", updatedCurso.getAlumnos());
 
         return mapResponse;
     }

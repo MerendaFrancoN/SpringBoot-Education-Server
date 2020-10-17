@@ -14,6 +14,7 @@ public class CursoDTO {
     private long cant_horas;
     private double nota_aprobacion;
     private Set<String> alumnos = new HashSet<>();
+    private Set<String> profesores = new HashSet<>();
 
     public CursoDTO(){}
     public CursoDTO(Curso curso){
@@ -71,5 +72,13 @@ public class CursoDTO {
 
     public void setAlumnos(Set<String> alumnos) {
         this.alumnos = alumnos;
+    }
+
+    public Set<String> getProfesores() {
+        return profesores;
+    }
+
+    public void setProfesores(Set<String> profesores) {
+        this.profesores = profesores;
     }
 }

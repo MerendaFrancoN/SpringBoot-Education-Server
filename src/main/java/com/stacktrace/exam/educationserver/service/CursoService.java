@@ -37,21 +37,25 @@ public class CursoService {
         return optionalCurso.map(CursoDTO::new);
     }
 
-    public Curso updateCurso(Curso updatedCurso){
-        Curso cursoToUpdate = cursoRepository.findById(updatedCurso.getId()).orElse(null);
+    public CursoDTO updateCurso(CursoDTO updatedCurso){
+        Optional<CursoDTO> cursoToUpdateDTO = getCurso(updatedCurso.getId());
 
         //CONTROLS
-        if (cursoToUpdate ==  null){
-            return null;
-        }
-        if(updatedCurso.getNombre() != null)
-            cursoToUpdate.setNombre(updatedCurso.getNombre());
-        if(updatedCurso.getDescripcion() != null)
-            cursoToUpdate.setDescripcion(updatedCurso.getDescripcion());
-        if(updatedCurso.getAlumnosEnlistados() != null)
-            cursoToUpdate.getAlumnosEnlistados().addAll(updatedCurso.getAlumnosEnlistados());
+        if (cursoToUpdateDTO.isPresent()){
 
-        return cursoRepository.save(cursoToUpdate);
+            if(updatedCurso.getNombre() != null)
+                cursoToUpdateDTO.get().setNombre(updatedCurso.getNombre());
+            if(updatedCurso.getDescripcion() != null)
+                cursoToUpdateDTO.get().setDescripcion(updatedCurso.getDescripcion());
+            if(updatedCurso.getAlumnos() != null)
+                cursoToUpdateDTO.get().getAlumnos().addAll(updatedCurso.getAlumnos());
+            //Update Values
+            cursoToUpdateDTO.get().setId(updatedCurso.getId());
+
+            return new CursoDTO(cursoRepository.save(mapCursoDTOtoCursoEntity(cursoToUpdateDTO.get())));
+        }
+        return null;
+
     }
 
     private Curso mapCursoDTOtoCursoEntity(CursoDTO cursoDTO) {
