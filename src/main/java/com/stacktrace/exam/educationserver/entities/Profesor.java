@@ -9,7 +9,7 @@ import java.util.Set;
 @Table(name = "profesores", uniqueConstraints = {@UniqueConstraint(columnNames = {"dni"})})
 public class Profesor extends Persona{
 
-    @OneToMany(mappedBy = "dictadoPor", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "dictadoPor", cascade = CascadeType.REFRESH)
     private Set<Curso> cursos_dictados;
 
     public Set<Curso> getCursos_dictados() {

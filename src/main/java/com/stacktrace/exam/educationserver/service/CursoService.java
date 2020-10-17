@@ -2,6 +2,7 @@ package com.stacktrace.exam.educationserver.service;
 
 import com.stacktrace.exam.educationserver.entities.Alumno;
 import com.stacktrace.exam.educationserver.entities.Curso;
+import com.stacktrace.exam.educationserver.entities.DTOs.AlumnoDTO;
 import com.stacktrace.exam.educationserver.entities.DTOs.CursoDTO;
 import com.stacktrace.exam.educationserver.repository.AlumnoRepository;
 import com.stacktrace.exam.educationserver.repository.CursoRepository;
@@ -30,7 +31,7 @@ public class CursoService {
        return cursoRepository.findAll().stream().map(CursoDTO::new).collect(Collectors.toList());
     }
 
-    public CursoDTO saveCurso(CursoDTO cursoDTO) {
+    public CursoDTO saveUpdateCurso(CursoDTO cursoDTO) {
         Curso curso = cursoRepository.save(mapCursoDTOtoCursoEntity(cursoDTO));
         return new CursoDTO(curso);
     }
@@ -40,26 +41,10 @@ public class CursoService {
         return optionalCurso.map(CursoDTO::new);
     }
 
-    public CursoDTO updateCurso(CursoDTO updatedCurso){
-        Optional<CursoDTO> cursoToUpdateDTO = getCurso(updatedCurso.getId());
-
-        //CONTROLS
-        if (cursoToUpdateDTO.isPresent()){
-
-            /*if(updatedCurso.getNombre() != null)
-                cursoToUpdateDTO.get().setNombre(updatedCurso.getNombre());
-            if(updatedCurso.getDescripcion() != null)
-                cursoToUpdateDTO.get().setDescripcion(updatedCurso.getDescripcion());
-            if(updatedCurso.getAlumnos() != null)
-                cursoToUpdateDTO.get().getAlumnos().addAll(updatedCurso.getAlumnos());*/
-            //Update Values
-            cursoToUpdateDTO.get().setId(updatedCurso.getId());
-
-            return new CursoDTO(cursoRepository.save(mapCursoDTOtoCursoEntity(cursoToUpdateDTO.get())));
-        }
-        return null;
-
+    public void removeCurso(CursoDTO cursoDTO){
+        cursoRepository.delete(mapCursoDTOtoCursoEntity(cursoDTO));
     }
+
 
     private Curso mapCursoDTOtoCursoEntity(CursoDTO cursoDTO) {
         Curso curso = new Curso();

@@ -18,11 +18,11 @@ public class Curso {
     private long cant_horas;
     private double nota_aprobacion;
 
-    @ManyToMany(mappedBy = "cursos_tomados")
+    @ManyToMany(mappedBy = "cursos_tomados", cascade = CascadeType.REFRESH)
     private Set<Alumno> alumnosEnlistados = new HashSet<>();
 
     //Asumo que uno o varios cursos pueden ser dictado por un solo profesor.
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     private Profesor dictadoPor;
 
 

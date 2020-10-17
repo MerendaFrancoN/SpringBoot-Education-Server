@@ -1,7 +1,6 @@
 package com.stacktrace.exam.educationserver.service;
 
-import com.stacktrace.exam.educationserver.entities.Alumno;
-import com.stacktrace.exam.educationserver.entities.DTOs.AlumnoDTO;
+
 import com.stacktrace.exam.educationserver.entities.DTOs.ProfesorDTO;
 import com.stacktrace.exam.educationserver.entities.Profesor;
 import com.stacktrace.exam.educationserver.repository.CursoRepository;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,10 +29,15 @@ public class ProfesorService {
     }
 
     public ProfesorDTO saveProfesor(ProfesorDTO profesor) {
-        return new ProfesorDTO(profesorRepository.save(mapAlumnoDTOtoAlumnoEntity(profesor)));
+        return new ProfesorDTO(profesorRepository.save(mapProfesorDTOtoProfesorEntity(profesor)));
     }
 
-    private Profesor mapAlumnoDTOtoAlumnoEntity(ProfesorDTO profesorDTO) {
+    public void removeProfesor(ProfesorDTO profesorDTO){
+        Profesor profesor = mapProfesorDTOtoProfesorEntity(profesorDTO);
+        profesorRepository.delete(profesor);
+    }
+
+    private Profesor mapProfesorDTOtoProfesorEntity(ProfesorDTO profesorDTO) {
         Profesor profesor = new Profesor();
         profesor.setId(profesorDTO.getId());
         profesor.setNombre(profesorDTO.getNombre());

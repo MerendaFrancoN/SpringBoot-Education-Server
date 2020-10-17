@@ -51,9 +51,40 @@ public class AlumnoController {
                     HttpStatus.NOT_FOUND);
     }
 
+    @PutMapping("/alumnos/")
+    @ResponseBody
+    public Object updateAlumno(@RequestBody AlumnoDTO alumnoDTO) {
+
+        Map<String, Object> mapResponse = new HashMap<>();
+        AlumnoDTO alumnoToBeUpdated = alumnoService.getAlumnoByDNI(alumnoDTO.getDni());
+
+        if(alumnoDTO.getNombre() != null)
+            alumnoToBeUpdated.setNombre(alumnoDTO.getNombre());
+        if(alumnoDTO.getApellido() != null)
+            alumnoToBeUpdated.setApellido(alumnoDTO.getApellido());
+        if(alumnoDTO.getDomicilio() != null)
+            alumnoToBeUpdated.setDomicilio(alumnoDTO.getDomicilio());
+        if(alumnoDTO.getSexo() != null)
+            alumnoToBeUpdated.setSexo(alumnoDTO.getSexo());
+        if(alumnoDTO.getFecha_de_nacimiento() != null)
+            alumnoToBeUpdated.setFecha_de_nacimiento(alumnoDTO.getFecha_de_nacimiento());
+        if(alumnoDTO.getTelefono() != null)
+            alumnoToBeUpdated.setTelefono(alumnoDTO.getTelefono());
+        if(alumnoDTO.getCursos_tomados() != null)
+            alumnoToBeUpdated.getCursos_tomados().addAll(alumnoDTO.getCursos_tomados());
+
+        AlumnoDTO updated = alumnoService.saveAlumno(alumnoToBeUpdated);
+
+        if ( updated == null) {
+            return new ResponseEntity<>(new ResponseError(404, String.format("Alumno con dni %s No encontrado", alumnoDTO.getDni())), HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
+
     @DeleteMapping(value = "/alumnos/{dni}")
     @ResponseBody
-    public Object removeCurso(@PathVariable String dni) {
+    public Object removeAlumno(@PathVariable String dni) {
         AlumnoDTO alumnoDTO = alumnoService.getAlumnoByDNI(dni);
         if(alumnoDTO != null){
             alumnoService.removeAlumno(alumnoDTO);
@@ -64,7 +95,5 @@ public class AlumnoController {
                     (404, String.format("Alumno con dni %s no encontrado", dni)),
                     HttpStatus.NOT_FOUND);
     }
-
-
 
 }
