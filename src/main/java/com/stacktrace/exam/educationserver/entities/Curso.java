@@ -1,9 +1,8 @@
 package com.stacktrace.exam.educationserver.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -12,28 +11,26 @@ public class Curso {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     private String nombre;
     private String descripcion;
     private long cant_horas;
-    private double nota_final;
+    private double nota_aprobacion;
 
-    @ManyToMany(mappedBy = "cursos_tomados", targetEntity = Alumno.class)
-    @JsonIgnore
-    private Set<Alumno> alumnosEnlistados;
+    @ManyToMany(mappedBy = "cursos_tomados")
+    private Set<Alumno> alumnosEnlistados = new HashSet<>();
 
     //Asumo que uno o varios cursos pueden ser dictado por un solo profesor.
     @ManyToOne
-    @JsonIgnore
     private Profesor dictadoPor;
 
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -61,11 +58,28 @@ public class Curso {
         this.cant_horas = cant_horas;
     }
 
-    public double getNota_final() {
-        return nota_final;
+    public double getNota_aprobacion() {
+        return nota_aprobacion;
     }
 
-    public void setNota_final(double nota_final) {
-        this.nota_final = nota_final;
+    public void setNota_aprobacion(double nota_final) {
+        this.nota_aprobacion = nota_final;
     }
+
+    public Set<Alumno> getAlumnosEnlistados() {
+        return alumnosEnlistados;
+    }
+
+    public void setAlumnosEnlistados(Set<Alumno> alumnosEnlistados) {
+        this.alumnosEnlistados = alumnosEnlistados;
+    }
+
+    public Profesor getDictadoPor() {
+        return dictadoPor;
+    }
+
+    public void setDictadoPor(Profesor dictadoPor) {
+        this.dictadoPor = dictadoPor;
+    }
+
 }
