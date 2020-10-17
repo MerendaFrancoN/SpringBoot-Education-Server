@@ -38,7 +38,7 @@ public class AlumnoController {
 
     }
 
-    @GetMapping(value = "/alumnos/busqueda")
+    @GetMapping(value = "/alumnos/get_cursos")
     @ResponseBody
     public Object searchCursos(@RequestParam("dni") String dni) {
         AlumnoDTO alumnoDTO = alumnoService.getAlumnoByDNI(dni);

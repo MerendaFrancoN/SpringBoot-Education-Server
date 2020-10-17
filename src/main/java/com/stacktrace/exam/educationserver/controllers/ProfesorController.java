@@ -35,7 +35,7 @@ public class ProfesorController {
         return  mapResponse;
     }
 
-    @GetMapping(value = "/profesores/busqueda")
+    @GetMapping(value = "/profesores/get_cursos")
     @ResponseBody
     public Object searchCursos(@RequestParam("dni") String dni) {
         ProfesorDTO profesorDTO = profesorService.getProfesor(dni);
