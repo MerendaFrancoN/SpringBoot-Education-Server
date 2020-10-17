@@ -1,5 +1,6 @@
 package com.stacktrace.exam.educationserver.controllers;
 
+import com.stacktrace.exam.educationserver.entities.DTOs.ProfesorDTO;
 import com.stacktrace.exam.educationserver.entities.Profesor;
 import com.stacktrace.exam.educationserver.service.ProfesorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 public class ProfesorController {
@@ -20,13 +22,13 @@ public class ProfesorController {
     @GetMapping(value = "/profesores")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public List<Profesor> getAll(){
+    public Set<ProfesorDTO> getAll(){
         return profesorService.getAll();
     }
 
     @PostMapping(value = "/profesores")
     @ResponseStatus(HttpStatus.CREATED)
-    public Object createProfesor(@RequestBody Profesor profesor) {
+    public Object createProfesor(@RequestBody ProfesorDTO profesor) {
         Map<String, Object> mapResponse = new HashMap<>();
         mapResponse.put("id", profesorService.saveProfesor(profesor).getId());
         return  mapResponse;

@@ -22,7 +22,7 @@ public class Curso {
     private Set<Alumno> alumnosEnlistados = new HashSet<>();
 
     //Asumo que uno o varios cursos pueden ser dictado por un solo profesor.
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Profesor dictadoPor;
 
 

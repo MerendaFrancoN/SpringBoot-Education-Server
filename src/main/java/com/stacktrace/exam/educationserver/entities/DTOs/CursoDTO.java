@@ -14,7 +14,7 @@ public class CursoDTO {
     private long cant_horas;
     private double nota_aprobacion;
     private Set<String> alumnos = new HashSet<>();
-    private Set<String> profesores = new HashSet<>();
+    private String profesor_dni;
 
     public CursoDTO(){}
     public CursoDTO(Curso curso){
@@ -24,6 +24,9 @@ public class CursoDTO {
         this.setCant_horas(curso.getCant_horas());
         this.setNota_aprobacion(curso.getNota_aprobacion());
         this.setAlumnos(curso.getAlumnosEnlistados().stream().map(Alumno::getDni).collect(Collectors.toSet()));
+
+        if(curso.getDictadoPor().getDni() != null)
+            this.setProfesor_dni(curso.getDictadoPor().getDni());
     }
 
     public int getId() {
@@ -74,11 +77,12 @@ public class CursoDTO {
         this.alumnos = alumnos;
     }
 
-    public Set<String> getProfesores() {
-        return profesores;
+    public String getProfesor_dni() {
+        return profesor_dni;
     }
 
-    public void setProfesores(Set<String> profesores) {
-        this.profesores = profesores;
+    public void setProfesor_dni(String profesor_dni) {
+        this.profesor_dni = profesor_dni;
     }
+
 }

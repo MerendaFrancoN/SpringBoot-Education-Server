@@ -5,23 +5,26 @@ import com.stacktrace.exam.educationserver.entities.Curso;
 import com.stacktrace.exam.educationserver.entities.DTOs.CursoDTO;
 import com.stacktrace.exam.educationserver.repository.AlumnoRepository;
 import com.stacktrace.exam.educationserver.repository.CursoRepository;
+import com.stacktrace.exam.educationserver.repository.ProfesorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
 public class CursoService {
 
     @Autowired
-    CursoRepository cursoRepository;
+    private CursoRepository cursoRepository;
 
     @Autowired
     private AlumnoRepository alumnoRepository;
+
+    @Autowired
+    private ProfesorRepository profesorRepository;
 
     public List<CursoDTO> getAll(){
        return cursoRepository.findAll().stream().map(CursoDTO::new).collect(Collectors.toList());
@@ -65,6 +68,7 @@ public class CursoService {
         curso.setDescripcion(cursoDTO.getDescripcion());
         curso.setNota_aprobacion(cursoDTO.getNota_aprobacion());
         curso.setCant_horas(cursoDTO.getCant_horas());
+        curso.setDictadoPor(profesorRepository.findByDni(cursoDTO.getProfesor_dni()));
 
         if (null == curso.getAlumnosEnlistados()) {
             curso.setAlumnosEnlistados(new HashSet<>());
