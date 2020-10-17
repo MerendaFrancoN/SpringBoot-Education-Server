@@ -22,6 +22,10 @@ public class AlumnoService {
     @Autowired
     CursoRepository cursoRepository;
 
+    public AlumnoDTO getAlumnoByDNI(String dni){
+        return new AlumnoDTO(alumnoRepository.findByDni(dni));
+    }
+
     public List<AlumnoDTO> getAll(){
         return alumnoRepository.findAll().stream().map(AlumnoDTO::new)
                 .collect(Collectors.toList());

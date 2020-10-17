@@ -32,8 +32,9 @@ public class CursoService {
         return new CursoDTO(curso);
     }
 
-    public Optional<Curso> getCurso(Integer curso_id){
-        return cursoRepository.findById(curso_id);
+    public Optional<CursoDTO> getCurso(Integer curso_id){
+        Optional<Curso> optionalCurso = cursoRepository.findById(curso_id);
+        return optionalCurso.map(CursoDTO::new);
     }
 
     public Curso updateCurso(Curso updatedCurso){
