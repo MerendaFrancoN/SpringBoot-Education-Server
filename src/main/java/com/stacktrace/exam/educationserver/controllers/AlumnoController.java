@@ -31,7 +31,7 @@ public class AlumnoController {
 
     @PostMapping(value = "/alumnos")
     @ResponseStatus(HttpStatus.CREATED)
-    public Object createClient(@RequestBody AlumnoDTO alumno) {
+    public Object createAlumno(@RequestBody AlumnoDTO alumno) {
         Map<String, Object> mapResponse = new HashMap<>();
         mapResponse.put("dni", alumnoService.saveAlumno(alumno).getDni());
         return  mapResponse;

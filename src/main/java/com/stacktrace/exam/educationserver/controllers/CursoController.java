@@ -24,7 +24,7 @@ public class CursoController {
 
     @PostMapping(value = "/cursos")
     @ResponseStatus(HttpStatus.CREATED)
-    public Object createClient(@RequestBody CursoDTO curso) {
+    public Object createCurso(@RequestBody CursoDTO curso) {
         Map<String, Object> mapResponse = new HashMap<>();
         mapResponse.put("id", cursoService.saveUpdateCurso(curso).getId());
         return  mapResponse;
