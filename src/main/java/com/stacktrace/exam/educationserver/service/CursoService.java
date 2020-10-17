@@ -53,9 +53,15 @@ public class CursoService {
         curso.setDescripcion(cursoDTO.getDescripcion());
         curso.setNota_aprobacion(cursoDTO.getNota_aprobacion());
         curso.setCant_horas(cursoDTO.getCant_horas());
-        curso.setDictadoPor(profesorRepository.findByDni(cursoDTO.getProfesor_dni()));
 
-        if (null == curso.getAlumnosEnlistados()) {
+        if(cursoDTO.getProfesor_dni() != null){
+            if(cursoDTO.getProfesor_dni().equals(""))
+                curso.setDictadoPor(null);
+            else
+                curso.setDictadoPor(profesorRepository.findByDni(cursoDTO.getProfesor_dni()));
+        }
+
+        if (curso.getAlumnosEnlistados() == null) {
             curso.setAlumnosEnlistados(new HashSet<>());
         }
         cursoDTO.getAlumnos().forEach(alumnoDNI -> {

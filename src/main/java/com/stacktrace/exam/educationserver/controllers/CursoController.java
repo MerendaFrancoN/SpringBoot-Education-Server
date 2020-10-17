@@ -30,21 +30,41 @@ public class CursoController {
         return  mapResponse;
     }
 
-
     @PutMapping("/cursos/")
     @ResponseBody
-    public Object updateCurso(@RequestBody CursoDTO curso) {
+    public Object updateCurso(@RequestBody CursoDTO cursoReqBody) {
 
-        Map<String, Object> mapResponse = new HashMap<>();
-        CursoDTO updatedCurso = cursoService.saveUpdateCurso(curso);
+        Optional<CursoDTO> cursoInDatabase = cursoService.getCurso(cursoReqBody.getId());
+        if(cursoInDatabase.isPresent()){
 
-        if ( updatedCurso == null) {
-            return new ResponseEntity<>(new ResponseError(404, String.format("Curso con ID %d No encontrado", curso.getId())), HttpStatus.NOT_FOUND);
+            if(cursoReqBody.getNombre() != null)
+                cursoInDatabase.get().setNombre(cursoReqBody.getNombre());
+            if(cursoReqBody.getCant_horas() > 0)
+                cursoInDatabase.get().setCant_horas(cursoReqBody.getCant_horas());
+            if(cursoReqBody.getDescripcion() != null)
+                cursoInDatabase.get().setDescripcion(cursoReqBody.getDescripcion());
+            if(cursoReqBody.getNota_aprobacion() > 0)
+                cursoInDatabase.get().setNota_aprobacion(cursoReqBody.getNota_aprobacion());
+            if(cursoReqBody.getAlumnos() != null){
+                //Remove alumnos that are already in the course to prevent errors
+                cursoReqBody.getAlumnos().removeAll(cursoInDatabase.get().getAlumnos());
+                //Clean alumnos
+                cursoInDatabase.get().getAlumnos().clear();
+                //Add updated ones
+                cursoInDatabase.get().getAlumnos().addAll(cursoInDatabase.get().getAlumnos());
+            }
+
+            if(cursoReqBody.getProfesor_dni() != null)
+                cursoInDatabase.get().setProfesor_dni(cursoReqBody.getProfesor_dni());
+
+            CursoDTO updatedCurso = cursoService.saveUpdateCurso(cursoReqBody);
+
+            if ( updatedCurso == null) {
+                return new ResponseEntity<>(new ResponseError(404, String.format("Curso con ID %d No encontrado", cursoReqBody.getId())), HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(updatedCurso, HttpStatus.OK);
         }
-        mapResponse.put("nombre",updatedCurso.getNombre());
-        mapResponse.put("alumnosEnlistados", updatedCurso.getAlumnos());
-
-        return mapResponse;
+        return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(value = "/cursos/busqueda")

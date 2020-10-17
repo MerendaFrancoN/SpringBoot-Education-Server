@@ -23,10 +23,18 @@ public class CursoDTO {
         this.setDescripcion(curso.getDescripcion());
         this.setCant_horas(curso.getCant_horas());
         this.setNota_aprobacion(curso.getNota_aprobacion());
-        this.setAlumnos(curso.getAlumnosEnlistados().stream().map(Alumno::getDni).collect(Collectors.toSet()));
+        this.setAlumnos(curso.getAlumnosEnlistados().stream()
+                .map(Alumno::getDni).collect(Collectors.toSet()));
 
-        if(curso.getDictadoPor().getDni() != null)
-            this.setProfesor_dni(curso.getDictadoPor().getDni());
+        try{
+            if(curso.getDictadoPor().getDni().equals(""))
+                this.setProfesor_dni("");
+            else
+                this.setProfesor_dni(curso.getDictadoPor().getDni());
+        }catch (NullPointerException e){
+            this.setProfesor_dni(null);
+        }
+
     }
 
     public int getId() {
