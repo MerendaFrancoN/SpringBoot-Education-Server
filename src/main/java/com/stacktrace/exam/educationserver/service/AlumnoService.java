@@ -3,6 +3,7 @@ package com.stacktrace.exam.educationserver.service;
 import com.stacktrace.exam.educationserver.entities.Alumno;
 import com.stacktrace.exam.educationserver.entities.Curso;
 import com.stacktrace.exam.educationserver.entities.DTOs.AlumnoDTO;
+import com.stacktrace.exam.educationserver.entities.DTOs.CursoDTO;
 import com.stacktrace.exam.educationserver.repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,15 @@ public class AlumnoService {
                 .map(nota -> new AlumnoDTO(nota.getAlumno()))
                 .collect(Collectors.toList()))
             .orElse(null);
+    }
+
+    public List<CursoDTO> getCursosAprobadosByAlumno(String alumno_dni){
+        Alumno optionalAlumno = alumnoRepository.findByDni(alumno_dni);
+
+        return optionalAlumno.getLista_notas().stream()
+                .filter(nota -> nota.getNota() >= nota.getCurso().getNota_aprobacion())
+                .map(nota -> new CursoDTO(nota.getCurso()))
+                .collect(Collectors.toList());
     }
 
     private Alumno mapAlumnoDTOtoAlumnoEntity(AlumnoDTO alumnoDTO) {
