@@ -33,8 +33,18 @@ public class NotaService {
     }
 
     public NotaDTO saveUpdateNota(NotaDTO notaDTO) {
-        Nota nota = notaRepository.save(mapNotaDTOtoNota(notaDTO));
-        return new NotaDTO(nota);
+        Optional<Curso> cursoOptional = cursoRepository.findById(notaDTO.getCurso_id());
+        boolean alumno_isNotInCurso;
+        if(cursoOptional.isPresent()){
+            alumno_isNotInCurso = cursoOptional.get().getAlumnosEnlistados().stream()
+                    .noneMatch(alumno -> alumno.getDni().equals(notaDTO.getAlumno_dni()));
+
+            if(! alumno_isNotInCurso){
+                Nota nota = notaRepository.save(mapNotaDTOtoNota(notaDTO));
+                return new NotaDTO(nota);
+            }
+        }
+        return null;
     }
 
     public Optional<NotaDTO> getNotaById(Long nota_id){
