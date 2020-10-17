@@ -98,4 +98,17 @@ public class AlumnoController {
                     HttpStatus.NOT_FOUND);
     }
 
+
+    @GetMapping(value = "/alumnos/get_aprobados")
+    @ResponseBody
+    public Object getAprobadosFromCurso(@RequestParam("curso_id") Integer id) {
+        List<AlumnoDTO> alumnosAprobadosFromCurso = alumnoService.getAlumnosAprobadosFromCurso(id);
+        if(alumnosAprobadosFromCurso != null){
+            return new ResponseEntity<>(alumnosAprobadosFromCurso, HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>(new ResponseError
+                    (404, String.format("Curso con id %d no encontrado", id)),
+                    HttpStatus.NOT_FOUND);
+    }
 }

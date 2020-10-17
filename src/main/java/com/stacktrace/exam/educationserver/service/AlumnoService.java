@@ -41,6 +41,16 @@ public class AlumnoService {
         alumnoRepository.delete(mapAlumnoDTOtoAlumnoEntity(alumnoDTO));
     }
 
+    public List<AlumnoDTO> getAlumnosAprobadosFromCurso(Integer curso_id){
+        Optional<Curso> optionalCurso = cursoRepository.findById(curso_id);
+
+        return optionalCurso.map(curso -> curso.getLista_notas().stream()
+                .filter(nota -> nota.getNota() >= curso.getNota_aprobacion())
+                .map(nota -> new AlumnoDTO(nota.getAlumno()))
+                .collect(Collectors.toList()))
+            .orElse(null);
+    }
+
     private Alumno mapAlumnoDTOtoAlumnoEntity(AlumnoDTO alumnoDTO) {
         Alumno alumno = new Alumno();
         alumno.setId(alumnoDTO.getId());
