@@ -57,9 +57,10 @@ public class NotaController {
     @ResponseBody
     public Object removeNota(@PathVariable Long id) {
         Optional<NotaDTO> notaDTO = notaService.getNotaById(id);
-        if(notaDTO.isPresent())
+        if(notaDTO.isPresent()){
+            notaService.removeNota(notaDTO.get());
             return new ResponseEntity<>("",HttpStatus.OK);
-        else
+        }else
             return new ResponseEntity<>(new ResponseError
                     (404, String.format("Nota con id %d no encontrado", id)),
                     HttpStatus.NOT_FOUND);
