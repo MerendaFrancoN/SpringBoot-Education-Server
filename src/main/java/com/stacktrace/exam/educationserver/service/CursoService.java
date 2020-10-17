@@ -2,7 +2,6 @@ package com.stacktrace.exam.educationserver.service;
 
 import com.stacktrace.exam.educationserver.entities.Alumno;
 import com.stacktrace.exam.educationserver.entities.Curso;
-import com.stacktrace.exam.educationserver.entities.DTOs.AlumnoDTO;
 import com.stacktrace.exam.educationserver.entities.DTOs.CursoDTO;
 import com.stacktrace.exam.educationserver.repository.AlumnoRepository;
 import com.stacktrace.exam.educationserver.repository.CursoRepository;
