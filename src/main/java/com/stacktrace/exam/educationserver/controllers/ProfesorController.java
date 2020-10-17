@@ -67,13 +67,15 @@ public class ProfesorController {
             profesorToBeUpdated.setFecha_de_nacimiento(profesorDTO.getFecha_de_nacimiento());
         if(profesorDTO.getTelefono() != null)
             profesorToBeUpdated.setTelefono(profesorDTO.getTelefono());
-        if(profesorDTO.getCursos_dictados() != null)
+        if(profesorDTO.getCursos_dictados() != null){
+            profesorToBeUpdated.getCursos_dictados().clear();
             profesorToBeUpdated.getCursos_dictados().addAll(profesorDTO.getCursos_dictados());
+        }
 
         ProfesorDTO updated = profesorService.saveProfesor(profesorToBeUpdated);
 
         if ( updated == null) {
-            return new ResponseEntity<>(new ResponseError(404, String.format("Alumno con dni %s No encontrado", profesorDTO.getDni())), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseError(404, String.format("Profesor con dni %s No encontrado", profesorDTO.getDni())), HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<>("", HttpStatus.OK);

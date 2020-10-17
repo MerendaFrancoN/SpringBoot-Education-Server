@@ -1,5 +1,5 @@
 package com.stacktrace.exam.educationserver.entities.DTOs;
-import com.stacktrace.exam.educationserver.entities.Alumno;
+
 import com.stacktrace.exam.educationserver.entities.Curso;
 import com.stacktrace.exam.educationserver.entities.Profesor;
 
