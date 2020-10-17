@@ -3,6 +3,7 @@ package com.stacktrace.exam.educationserver.entities;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -24,6 +25,9 @@ public class Curso {
     //Asumo que uno o varios cursos pueden ser dictado por un solo profesor.
     @ManyToOne(cascade = CascadeType.REFRESH)
     private Profesor dictadoPor;
+
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.REFRESH)
+    private List<Nota> lista_notas;
 
 
     public int getId() {

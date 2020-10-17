@@ -27,4 +27,7 @@ public class Alumno extends Persona{
     public void setCursos_tomados(Set<Curso> cursos_tomados) {
         this.cursos_tomados = cursos_tomados;
     }
+
+    @OneToMany(mappedBy = "alumno",cascade = CascadeType.REFRESH)
+    private List<Nota> lista_notas;
 }
