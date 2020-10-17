@@ -2,9 +2,11 @@ package com.stacktrace.exam.educationserver.service;
 
 import com.stacktrace.exam.educationserver.entities.Alumno;
 import com.stacktrace.exam.educationserver.entities.Curso;
+import com.stacktrace.exam.educationserver.entities.DTOs.AlumnoDTO;
 import com.stacktrace.exam.educationserver.entities.DTOs.CursoDTO;
 import com.stacktrace.exam.educationserver.repository.AlumnoRepository;
 import com.stacktrace.exam.educationserver.repository.CursoRepository;
+import com.stacktrace.exam.educationserver.repository.NotaRepository;
 import com.stacktrace.exam.educationserver.repository.ProfesorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,13 +28,11 @@ public class CursoService {
     @Autowired
     private ProfesorRepository profesorRepository;
 
+    @Autowired
+    private NotaRepository notaRepository;
+
     public List<CursoDTO> getAll(){
        return cursoRepository.findAll().stream().map(CursoDTO::new).collect(Collectors.toList());
-    }
-
-    public CursoDTO saveUpdateCurso(CursoDTO cursoDTO) {
-        Curso curso = cursoRepository.save(mapCursoDTOtoCursoEntity(cursoDTO));
-        return new CursoDTO(curso);
     }
 
     public Optional<CursoDTO> getCurso(Integer curso_id){
@@ -40,10 +40,14 @@ public class CursoService {
         return optionalCurso.map(CursoDTO::new);
     }
 
+    public CursoDTO saveUpdateCurso(CursoDTO cursoDTO) {
+        Curso curso = cursoRepository.save(mapCursoDTOtoCursoEntity(cursoDTO));
+        return new CursoDTO(curso);
+    }
+
     public void removeCurso(CursoDTO cursoDTO){
         cursoRepository.delete(mapCursoDTOtoCursoEntity(cursoDTO));
     }
-
 
     private Curso mapCursoDTOtoCursoEntity(CursoDTO cursoDTO) {
         Curso curso = new Curso();
