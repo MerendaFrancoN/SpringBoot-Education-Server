@@ -20,6 +20,9 @@ public class Alumno extends Persona{
                             nullable = false, updatable = false)})
     private Set<Curso> cursos_tomados;
 
+    @OneToMany(mappedBy = "alumno",cascade = CascadeType.REFRESH)
+    private List<Nota> lista_notas;
+
     public Set<Curso> getCursos_tomados() {
         return cursos_tomados;
     }
@@ -28,6 +31,11 @@ public class Alumno extends Persona{
         this.cursos_tomados = cursos_tomados;
     }
 
-    @OneToMany(mappedBy = "alumno",cascade = CascadeType.REFRESH)
-    private List<Nota> lista_notas;
+    public List<Nota> getLista_notas() {
+        return lista_notas;
+    }
+
+    public void setLista_notas(List<Nota> lista_notas) {
+        this.lista_notas = lista_notas;
+    }
 }

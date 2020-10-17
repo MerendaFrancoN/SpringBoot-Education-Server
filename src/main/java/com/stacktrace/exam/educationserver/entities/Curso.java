@@ -86,4 +86,11 @@ public class Curso {
         this.dictadoPor = dictadoPor;
     }
 
+    public List<Nota> getLista_notas() {
+        return lista_notas;
+    }
+
+    public void setLista_notas(List<Nota> lista_notas) {
+        this.lista_notas = lista_notas;
+    }
 }
