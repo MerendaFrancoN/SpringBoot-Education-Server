@@ -18,7 +18,7 @@ public class CursoDTO {
     private double nota_aprobacion;
     private Set<String> alumnos_dni = new HashSet<>();
     private String profesor_dni;
-    private List<Long> lista_notas_id = new LinkedList<>();
+    private List<Long> notas_id = new LinkedList<>();
 
     public CursoDTO(){}
     public CursoDTO(Curso curso){
@@ -31,7 +31,7 @@ public class CursoDTO {
                 .map(Alumno::getDni).collect(Collectors.toSet()));
 
         if(curso.getLista_notas() != null)
-            this.setLista_notas_id(curso.getLista_notas().stream()
+            this.setNotas_id(curso.getLista_notas().stream()
                     .map(Nota::getId).collect(Collectors.toList()));
 
         try{
@@ -101,11 +101,11 @@ public class CursoDTO {
         this.profesor_dni = profesor_dni;
     }
 
-    public List<Long> getLista_notas_id() {
-        return lista_notas_id;
+    public List<Long> getNotas_id() {
+        return notas_id;
     }
 
-    public void setLista_notas_id(List<Long> lista_notas_id) {
-        this.lista_notas_id = lista_notas_id;
+    public void setNotas_id(List<Long> notas_id) {
+        this.notas_id = notas_id;
     }
 }

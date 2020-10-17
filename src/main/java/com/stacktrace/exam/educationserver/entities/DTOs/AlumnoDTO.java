@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 
 public class AlumnoDTO extends PersonaDTO{
 
-    private Set<Integer> cursos_tomados_id = new HashSet<>();
+    private Set<Integer> cursos_id = new HashSet<>();
 
-    private List<Long> lista_notas_id = new LinkedList<>();
+    private List<Long> notas_id = new LinkedList<>();
 
     public AlumnoDTO(){}
     public AlumnoDTO(Alumno alumno){
@@ -28,28 +28,28 @@ public class AlumnoDTO extends PersonaDTO{
         super.setDomicilio(alumno.getDomicilio());
         super.setTelefono(alumno.getTelefono());
         super.setSexo(alumno.getSexo());
-        this.getCursos_tomados_id().addAll(alumno.getCursos_tomados()
+        this.getCursos_id().addAll(alumno.getCursos_tomados()
                 .stream().map(Curso::getId).collect(Collectors.toSet()));
 
         if(alumno.getLista_notas() != null) {
-            this.getLista_notas_id().addAll(alumno.getLista_notas()
+            this.getNotas_id().addAll(alumno.getLista_notas()
                 .stream().map(Nota::getId).collect(Collectors.toList()));
         }
     }
 
-    public Set<Integer> getCursos_tomados_id() {
-        return cursos_tomados_id;
+    public Set<Integer> getCursos_id() {
+        return cursos_id;
     }
 
-    public void setCursos_tomados_id(Set<Integer> cursos_tomados_id) {
-        this.cursos_tomados_id = cursos_tomados_id;
+    public void setCursos_id(Set<Integer> cursos_id) {
+        this.cursos_id = cursos_id;
     }
 
-    public List<Long> getLista_notas_id() {
-        return lista_notas_id;
+    public List<Long> getNotas_id() {
+        return notas_id;
     }
 
-    public void setLista_notas_id(List<Long> lista_notas_id) {
-        this.lista_notas_id = lista_notas_id;
+    public void setNotas_id(List<Long> notas_id) {
+        this.notas_id = notas_id;
     }
 }

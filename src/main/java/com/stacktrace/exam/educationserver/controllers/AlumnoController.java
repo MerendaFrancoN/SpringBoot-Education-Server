@@ -40,7 +40,7 @@ public class AlumnoController {
     public Object searchCursos(@RequestParam("dni") String dni) {
         AlumnoDTO alumnoDTO = alumnoService.getAlumnoByDNI(dni);
         if(alumnoDTO != null){
-            return new ResponseEntity<>(alumnoDTO.getCursos_tomados_id(), HttpStatus.OK);
+            return new ResponseEntity<>(alumnoDTO.getCursos_id(), HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(new ResponseError
@@ -67,9 +67,9 @@ public class AlumnoController {
             alumnoToBeUpdated.setFecha_de_nacimiento(alumnoDTO.getFecha_de_nacimiento());
         if(alumnoDTO.getTelefono() != null)
             alumnoToBeUpdated.setTelefono(alumnoDTO.getTelefono());
-        if(alumnoDTO.getCursos_tomados_id() != null){
-            alumnoToBeUpdated.getCursos_tomados_id().clear();
-            alumnoToBeUpdated.getCursos_tomados_id().addAll(alumnoDTO.getCursos_tomados_id());
+        if(alumnoDTO.getCursos_id() != null){
+            alumnoToBeUpdated.getCursos_id().clear();
+            alumnoToBeUpdated.getCursos_id().addAll(alumnoDTO.getCursos_id());
         }
 
         AlumnoDTO updated = alumnoService.saveAlumno(alumnoToBeUpdated);
