@@ -54,7 +54,7 @@ public class ProfesorService {
             profesor.setCursos_dictados(new HashSet<>());
         }
 
-        profesorDTO.getCursos_dictados_ids().forEach(cursoID -> {
+        profesorDTO.getCursos_dictados_id().forEach(cursoID -> {
             cursoRepository.findById(cursoID).ifPresent(
                     curso -> profesor.getCursos_dictados().add(curso)
             );

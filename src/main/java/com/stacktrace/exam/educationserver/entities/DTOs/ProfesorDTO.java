@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class ProfesorDTO extends PersonaDTO{
 
-    private Set<Integer> cursos_dictados_ids = new HashSet<>();
+    private Set<Integer> cursos_dictados_id = new HashSet<>();
 
     public ProfesorDTO(){}
     public ProfesorDTO(Profesor profesor){
@@ -24,14 +24,14 @@ public class ProfesorDTO extends PersonaDTO{
         super.setTelefono(profesor.getTelefono());
         super.setSexo(profesor.getSexo());
 
-        this.cursos_dictados_ids.addAll(profesor.getCursos_dictados().stream().map(Curso::getId).collect(Collectors.toSet()));
+        this.cursos_dictados_id.addAll(profesor.getCursos_dictados().stream().map(Curso::getId).collect(Collectors.toSet()));
     }
 
-    public Set<Integer> getCursos_dictados_ids() {
-        return cursos_dictados_ids;
+    public Set<Integer> getCursos_dictados_id() {
+        return cursos_dictados_id;
     }
 
-    public void setCursos_dictados_ids(Set<Integer> cursos_dictados_ids) {
-        this.cursos_dictados_ids = cursos_dictados_ids;
+    public void setCursos_dictados_id(Set<Integer> cursos_dictados_id) {
+        this.cursos_dictados_id = cursos_dictados_id;
     }
 }

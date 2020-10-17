@@ -38,7 +38,7 @@ public class ProfesorController {
     public Object searchCursos(@RequestParam("dni") String dni) {
         ProfesorDTO profesorDTO = profesorService.getProfesor(dni);
         if(profesorDTO != null){
-            return new ResponseEntity<>(profesorDTO.getCursos_dictados_ids(), HttpStatus.OK);
+            return new ResponseEntity<>(profesorDTO.getCursos_dictados_id(), HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(new ResponseError
@@ -65,9 +65,9 @@ public class ProfesorController {
             profesorToBeUpdated.setFecha_de_nacimiento(profesorDTO.getFecha_de_nacimiento());
         if(profesorDTO.getTelefono() != null)
             profesorToBeUpdated.setTelefono(profesorDTO.getTelefono());
-        if(profesorDTO.getCursos_dictados_ids() != null){
-            profesorToBeUpdated.getCursos_dictados_ids().clear();
-            profesorToBeUpdated.getCursos_dictados_ids().addAll(profesorDTO.getCursos_dictados_ids());
+        if(profesorDTO.getCursos_dictados_id() != null){
+            profesorToBeUpdated.getCursos_dictados_id().clear();
+            profesorToBeUpdated.getCursos_dictados_id().addAll(profesorDTO.getCursos_dictados_id());
         }
 
         ProfesorDTO updated = profesorService.saveProfesor(profesorToBeUpdated);
