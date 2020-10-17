@@ -78,7 +78,7 @@ public class AlumnoService {
             alumno.setCursos_tomados(new HashSet<>());
         }
 
-        alumnoDTO.getCursos_tomados().forEach(cursoID -> {
+        alumnoDTO.getCursos_tomados_id().forEach(cursoID -> {
             cursoRepository.findById(cursoID).ifPresent(
                     curso -> alumno.getCursos_tomados().add(curso)
             );

@@ -1,6 +1,5 @@
 package com.stacktrace.exam.educationserver.entities.DTOs;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stacktrace.exam.educationserver.entities.Alumno;
 import com.stacktrace.exam.educationserver.entities.Curso;
 import com.stacktrace.exam.educationserver.entities.Nota;
@@ -17,9 +16,9 @@ public class CursoDTO {
     private String descripcion;
     private long cant_horas;
     private double nota_aprobacion;
-    private Set<String> alumnos = new HashSet<>();
+    private Set<String> alumnos_dni = new HashSet<>();
     private String profesor_dni;
-    private List<Long> lista_notas = new LinkedList<>();
+    private List<Long> lista_notas_ids = new LinkedList<>();
 
     public CursoDTO(){}
     public CursoDTO(Curso curso){
@@ -28,11 +27,11 @@ public class CursoDTO {
         this.setDescripcion(curso.getDescripcion());
         this.setCant_horas(curso.getCant_horas());
         this.setNota_aprobacion(curso.getNota_aprobacion());
-        this.setAlumnos(curso.getAlumnosEnlistados().stream()
+        this.setAlumnos_dni(curso.getAlumnosEnlistados().stream()
                 .map(Alumno::getDni).collect(Collectors.toSet()));
 
         if(curso.getLista_notas() != null)
-            this.setLista_notas(curso.getLista_notas().stream()
+            this.setLista_notas_ids(curso.getLista_notas().stream()
                     .map(Nota::getId).collect(Collectors.toList()));
 
         try{
@@ -86,12 +85,12 @@ public class CursoDTO {
         this.nota_aprobacion = nota_aprobacion;
     }
 
-    public Set<String> getAlumnos() {
-        return alumnos;
+    public Set<String> getAlumnos_dni() {
+        return alumnos_dni;
     }
 
-    public void setAlumnos(Set<String> alumnos) {
-        this.alumnos = alumnos;
+    public void setAlumnos_dni(Set<String> alumnos_dni) {
+        this.alumnos_dni = alumnos_dni;
     }
 
     public String getProfesor_dni() {
@@ -102,11 +101,11 @@ public class CursoDTO {
         this.profesor_dni = profesor_dni;
     }
 
-    public List<Long> getLista_notas() {
-        return lista_notas;
+    public List<Long> getLista_notas_ids() {
+        return lista_notas_ids;
     }
 
-    public void setLista_notas(List<Long> lista_notas) {
-        this.lista_notas = lista_notas;
+    public void setLista_notas_ids(List<Long> lista_notas_ids) {
+        this.lista_notas_ids = lista_notas_ids;
     }
 }

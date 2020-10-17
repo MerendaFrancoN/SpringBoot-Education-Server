@@ -1,8 +1,6 @@
 package com.stacktrace.exam.educationserver.controllers;
 
-import com.stacktrace.exam.educationserver.entities.DTOs.AlumnoDTO;
 import com.stacktrace.exam.educationserver.entities.DTOs.ProfesorDTO;
-import com.stacktrace.exam.educationserver.entities.Profesor;
 import com.stacktrace.exam.educationserver.entities.ResponseError;
 import com.stacktrace.exam.educationserver.service.ProfesorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +38,7 @@ public class ProfesorController {
     public Object searchCursos(@RequestParam("dni") String dni) {
         ProfesorDTO profesorDTO = profesorService.getProfesor(dni);
         if(profesorDTO != null){
-            return new ResponseEntity<>(profesorDTO.getCursos_dictados(), HttpStatus.OK);
+            return new ResponseEntity<>(profesorDTO.getCursos_dictados_ids(), HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(new ResponseError
@@ -67,9 +65,9 @@ public class ProfesorController {
             profesorToBeUpdated.setFecha_de_nacimiento(profesorDTO.getFecha_de_nacimiento());
         if(profesorDTO.getTelefono() != null)
             profesorToBeUpdated.setTelefono(profesorDTO.getTelefono());
-        if(profesorDTO.getCursos_dictados() != null){
-            profesorToBeUpdated.getCursos_dictados().clear();
-            profesorToBeUpdated.getCursos_dictados().addAll(profesorDTO.getCursos_dictados());
+        if(profesorDTO.getCursos_dictados_ids() != null){
+            profesorToBeUpdated.getCursos_dictados_ids().clear();
+            profesorToBeUpdated.getCursos_dictados_ids().addAll(profesorDTO.getCursos_dictados_ids());
         }
 
         ProfesorDTO updated = profesorService.saveProfesor(profesorToBeUpdated);

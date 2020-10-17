@@ -45,13 +45,13 @@ public class CursoController {
                 cursoInDatabase.get().setDescripcion(cursoReqBody.getDescripcion());
             if(cursoReqBody.getNota_aprobacion() > 0)
                 cursoInDatabase.get().setNota_aprobacion(cursoReqBody.getNota_aprobacion());
-            if(cursoReqBody.getAlumnos() != null){
+            if(cursoReqBody.getAlumnos_dni() != null){
                 //Remove alumnos that are already in the course to prevent errors
-                cursoReqBody.getAlumnos().removeAll(cursoInDatabase.get().getAlumnos());
+                cursoReqBody.getAlumnos_dni().removeAll(cursoInDatabase.get().getAlumnos_dni());
                 //Clean alumnos
-                cursoInDatabase.get().getAlumnos().clear();
+                cursoInDatabase.get().getAlumnos_dni().clear();
                 //Add updated ones
-                cursoInDatabase.get().getAlumnos().addAll(cursoInDatabase.get().getAlumnos());
+                cursoInDatabase.get().getAlumnos_dni().addAll(cursoInDatabase.get().getAlumnos_dni());
             }
 
             if(cursoReqBody.getProfesor_dni() != null)
@@ -72,7 +72,7 @@ public class CursoController {
     public Object searchAlumnos(@RequestParam("curso_id") Integer id) {
         Optional<CursoDTO> cursoOptional = cursoService.getCurso(id);
         if(cursoOptional.isPresent()){
-            return new ResponseEntity<>(cursoOptional.get().getAlumnos(), HttpStatus.OK);
+            return new ResponseEntity<>(cursoOptional.get().getAlumnos_dni(), HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(new ResponseError

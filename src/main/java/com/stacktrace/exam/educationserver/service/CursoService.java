@@ -2,7 +2,6 @@ package com.stacktrace.exam.educationserver.service;
 
 import com.stacktrace.exam.educationserver.entities.Alumno;
 import com.stacktrace.exam.educationserver.entities.Curso;
-import com.stacktrace.exam.educationserver.entities.DTOs.AlumnoDTO;
 import com.stacktrace.exam.educationserver.entities.DTOs.CursoDTO;
 import com.stacktrace.exam.educationserver.repository.AlumnoRepository;
 import com.stacktrace.exam.educationserver.repository.CursoRepository;
@@ -67,7 +66,7 @@ public class CursoService {
         if (curso.getAlumnosEnlistados() == null) {
             curso.setAlumnosEnlistados(new HashSet<>());
         }
-        cursoDTO.getAlumnos().forEach(alumnoDNI -> {
+        cursoDTO.getAlumnos_dni().forEach(alumnoDNI -> {
             Alumno alumno = alumnoRepository.findByDni(alumnoDNI);
             alumno.getCursos_tomados().add(curso);
         });

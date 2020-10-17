@@ -1,7 +1,5 @@
 package com.stacktrace.exam.educationserver.controllers;
 
-import com.stacktrace.exam.educationserver.entities.Alumno;
-import com.stacktrace.exam.educationserver.entities.Curso;
 import com.stacktrace.exam.educationserver.entities.DTOs.AlumnoDTO;
 import com.stacktrace.exam.educationserver.entities.DTOs.CursoDTO;
 import com.stacktrace.exam.educationserver.entities.ResponseError;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 public class AlumnoController {
@@ -43,7 +40,7 @@ public class AlumnoController {
     public Object searchCursos(@RequestParam("dni") String dni) {
         AlumnoDTO alumnoDTO = alumnoService.getAlumnoByDNI(dni);
         if(alumnoDTO != null){
-            return new ResponseEntity<>(alumnoDTO.getCursos_tomados(), HttpStatus.OK);
+            return new ResponseEntity<>(alumnoDTO.getCursos_tomados_id(), HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(new ResponseError
@@ -70,9 +67,9 @@ public class AlumnoController {
             alumnoToBeUpdated.setFecha_de_nacimiento(alumnoDTO.getFecha_de_nacimiento());
         if(alumnoDTO.getTelefono() != null)
             alumnoToBeUpdated.setTelefono(alumnoDTO.getTelefono());
-        if(alumnoDTO.getCursos_tomados() != null){
-            alumnoToBeUpdated.getCursos_tomados().clear();
-            alumnoToBeUpdated.getCursos_tomados().addAll(alumnoDTO.getCursos_tomados());
+        if(alumnoDTO.getCursos_tomados_id() != null){
+            alumnoToBeUpdated.getCursos_tomados_id().clear();
+            alumnoToBeUpdated.getCursos_tomados_id().addAll(alumnoDTO.getCursos_tomados_id());
         }
 
         AlumnoDTO updated = alumnoService.saveAlumno(alumnoToBeUpdated);
