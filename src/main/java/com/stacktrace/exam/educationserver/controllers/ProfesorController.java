@@ -1,7 +1,9 @@
 package com.stacktrace.exam.educationserver.controllers;
 
+import com.stacktrace.exam.educationserver.entities.DTOs.AlumnoDTO;
 import com.stacktrace.exam.educationserver.entities.DTOs.ProfesorDTO;
 import com.stacktrace.exam.educationserver.entities.Profesor;
+import com.stacktrace.exam.educationserver.entities.ResponseError;
 import com.stacktrace.exam.educationserver.service.ProfesorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,18 @@ public class ProfesorController {
         Map<String, Object> mapResponse = new HashMap<>();
         mapResponse.put("id", profesorService.saveProfesor(profesor).getId());
         return  mapResponse;
+    }
 
+    @GetMapping(value = "/profesores/busqueda")
+    @ResponseBody
+    public Object searchCursos(@RequestParam("dni") String dni) {
+        ProfesorDTO profesorDTO = profesorService.getProfesor(dni);
+        if(profesorDTO != null){
+            return new ResponseEntity<>(profesorDTO.getCursos_dictados(), HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>(new ResponseError
+                    (404, String.format("Profesor con dni %s no encontrado", dni)),
+                    HttpStatus.NOT_FOUND);
     }
 }

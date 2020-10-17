@@ -47,7 +47,7 @@ public class AlumnoController {
         }
         else
             return new ResponseEntity<>(new ResponseError
-                    (404, String.format("Curso con dni %s no encontrado", dni)),
+                    (404, String.format("Alumno con dni %s no encontrado", dni)),
                     HttpStatus.NOT_FOUND);
     }
 }

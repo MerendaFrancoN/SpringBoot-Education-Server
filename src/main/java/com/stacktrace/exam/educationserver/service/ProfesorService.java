@@ -22,6 +22,10 @@ public class ProfesorService {
     @Autowired
     CursoRepository cursoRepository;
 
+    public ProfesorDTO getProfesor(String dni){
+        return new ProfesorDTO(profesorRepository.findByDni(dni));
+    }
+
     public Set<ProfesorDTO> getAll(){
         return profesorRepository.findAll().stream().map(ProfesorDTO::new).collect(Collectors.toSet());
     }
