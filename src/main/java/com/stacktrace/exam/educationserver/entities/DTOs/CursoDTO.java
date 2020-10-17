@@ -2,8 +2,11 @@ package com.stacktrace.exam.educationserver.entities.DTOs;
 
 import com.stacktrace.exam.educationserver.entities.Alumno;
 import com.stacktrace.exam.educationserver.entities.Curso;
+import com.stacktrace.exam.educationserver.entities.Nota;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,6 +18,7 @@ public class CursoDTO {
     private double nota_aprobacion;
     private Set<String> alumnos = new HashSet<>();
     private String profesor_dni;
+    private List<Long> lista_notas = new LinkedList<>();
 
     public CursoDTO(){}
     public CursoDTO(Curso curso){
@@ -25,6 +29,7 @@ public class CursoDTO {
         this.setNota_aprobacion(curso.getNota_aprobacion());
         this.setAlumnos(curso.getAlumnosEnlistados().stream()
                 .map(Alumno::getDni).collect(Collectors.toSet()));
+        this.setLista_notas(curso.getLista_notas().stream().map(Nota::getId).collect(Collectors.toList()));
 
         try{
             if(curso.getDictadoPor().getDni().equals(""))
@@ -93,4 +98,11 @@ public class CursoDTO {
         this.profesor_dni = profesor_dni;
     }
 
+    public List<Long> getLista_notas() {
+        return lista_notas;
+    }
+
+    public void setLista_notas(List<Long> lista_notas) {
+        this.lista_notas = lista_notas;
+    }
 }
