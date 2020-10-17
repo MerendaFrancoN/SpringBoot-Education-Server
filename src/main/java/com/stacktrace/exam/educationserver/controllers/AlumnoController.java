@@ -70,8 +70,10 @@ public class AlumnoController {
             alumnoToBeUpdated.setFecha_de_nacimiento(alumnoDTO.getFecha_de_nacimiento());
         if(alumnoDTO.getTelefono() != null)
             alumnoToBeUpdated.setTelefono(alumnoDTO.getTelefono());
-        if(alumnoDTO.getCursos_tomados() != null)
+        if(alumnoDTO.getCursos_tomados() != null){
+            alumnoToBeUpdated.getCursos_tomados().clear();
             alumnoToBeUpdated.getCursos_tomados().addAll(alumnoDTO.getCursos_tomados());
+        }
 
         AlumnoDTO updated = alumnoService.saveAlumno(alumnoToBeUpdated);
 
