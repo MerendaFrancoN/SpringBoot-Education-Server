@@ -37,6 +37,10 @@ public class AlumnoService {
         return new AlumnoDTO(alumnoRepository.save(alumno));
     }
 
+    public void removeAlumno(AlumnoDTO alumnoDTO){
+        alumnoRepository.delete(mapAlumnoDTOtoAlumnoEntity(alumnoDTO));
+    }
+
     private Alumno mapAlumnoDTOtoAlumnoEntity(AlumnoDTO alumnoDTO) {
         Alumno alumno = new Alumno();
         alumno.setId(alumnoDTO.getId());

@@ -10,7 +10,7 @@ public class Alumno extends Persona{
 
 
     //Table cursos_alumnos will hold data from join between cursos and alumnos
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinTable(name = "cursos_alumnos",
             joinColumns = {
                     @JoinColumn(name = "alumno_id", referencedColumnName = "id",

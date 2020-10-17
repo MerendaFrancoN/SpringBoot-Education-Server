@@ -46,12 +46,12 @@ public class CursoService {
         //CONTROLS
         if (cursoToUpdateDTO.isPresent()){
 
-            if(updatedCurso.getNombre() != null)
+            /*if(updatedCurso.getNombre() != null)
                 cursoToUpdateDTO.get().setNombre(updatedCurso.getNombre());
             if(updatedCurso.getDescripcion() != null)
                 cursoToUpdateDTO.get().setDescripcion(updatedCurso.getDescripcion());
             if(updatedCurso.getAlumnos() != null)
-                cursoToUpdateDTO.get().getAlumnos().addAll(updatedCurso.getAlumnos());
+                cursoToUpdateDTO.get().getAlumnos().addAll(updatedCurso.getAlumnos());*/
             //Update Values
             cursoToUpdateDTO.get().setId(updatedCurso.getId());
 

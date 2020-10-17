@@ -50,4 +50,21 @@ public class AlumnoController {
                     (404, String.format("Alumno con dni %s no encontrado", dni)),
                     HttpStatus.NOT_FOUND);
     }
+
+    @DeleteMapping(value = "/alumnos/{dni}")
+    @ResponseBody
+    public Object removeCurso(@PathVariable String dni) {
+        AlumnoDTO alumnoDTO = alumnoService.getAlumnoByDNI(dni);
+        if(alumnoDTO != null){
+            alumnoService.removeAlumno(alumnoDTO);
+            return new ResponseEntity<>("", HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>(new ResponseError
+                    (404, String.format("Alumno con dni %s no encontrado", dni)),
+                    HttpStatus.NOT_FOUND);
+    }
+
+
+
 }
