@@ -1,6 +1,7 @@
 package com.stacktrace.exam.educationserver.entities;
 
 import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -13,10 +14,10 @@ public class Profesor extends Persona{
     private Set<Curso> cursos_dictados;
 
     @OneToMany(mappedBy = "profesor", cascade = CascadeType.REFRESH)
-    private List<Capacitacion> capacitaciones;
+    private List<Capacitacion> capacitaciones = new LinkedList<>();
 
     @OneToMany(mappedBy = "profesor", cascade = CascadeType.REFRESH)
-    private List<Titulo> titulos;
+    private List<Titulo> titulos = new LinkedList<>();
 
 
     public Set<Curso> getCursos_dictados() {
@@ -42,4 +43,6 @@ public class Profesor extends Persona{
     public void setTitulos(List<Titulo> titulos) {
         this.titulos = titulos;
     }
+
+
 }

@@ -3,11 +3,14 @@ package com.stacktrace.exam.educationserver.service;
 
 import com.stacktrace.exam.educationserver.entities.DTOs.ProfesorDTO;
 import com.stacktrace.exam.educationserver.entities.Profesor;
+import com.stacktrace.exam.educationserver.repository.CapacitacionRepository;
 import com.stacktrace.exam.educationserver.repository.CursoRepository;
 import com.stacktrace.exam.educationserver.repository.ProfesorRepository;
+import com.stacktrace.exam.educationserver.repository.TituloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,6 +20,10 @@ public class ProfesorService {
 
     @Autowired
     ProfesorRepository profesorRepository;
+    @Autowired
+    CapacitacionRepository capacitacionRepository;
+    @Autowired
+    TituloRepository tituloRepository;
     @Autowired
     CursoRepository cursoRepository;
 
@@ -28,13 +35,36 @@ public class ProfesorService {
         return profesorRepository.findAll().stream().map(ProfesorDTO::new).collect(Collectors.toSet());
     }
 
-    public ProfesorDTO saveProfesor(ProfesorDTO profesor) {
-        return new ProfesorDTO(profesorRepository.save(mapProfesorDTOtoProfesorEntity(profesor)));
+    public ProfesorDTO saveProfesor(ProfesorDTO profesorDTO) {
+        //First create professor to relate it to their capacitaciones, titulos
+        Profesor profesorReturn = profesorRepository.save(mapProfesorDTOtoProfesorEntity(profesorDTO));
+
+        //Create capacitaciones and titulos related to profesorDTO
+        profesorDTO.getCapacitaciones().forEach(capacitacionDTO ->
+                capacitacionRepository.save(capacitacionDTO.toCapacitacion(profesorReturn)));
+        profesorDTO.getTitulos().forEach(tituloDTO ->
+                tituloRepository.save(tituloDTO.toTitulo(profesorReturn)));
+        return new ProfesorDTO(profesorReturn);
     }
 
+    @Transactional
+    public ProfesorDTO updateProfesor(ProfesorDTO profesorDTO){
+        //Clean old capacitaciones, titulos of this profesor
+        capacitacionRepository.deleteAllByProfesor_Dni(profesorDTO.getDni());
+        tituloRepository.deleteAllByProfesor_Dni(profesorDTO.getDni());
+
+        //Update Profesor with specified titulos and capacitaciones in profesorDTO
+        return saveProfesor(profesorDTO);
+    }
+
+    @Transactional
     public void removeProfesor(ProfesorDTO profesorDTO){
-        Profesor profesor = mapProfesorDTOtoProfesorEntity(profesorDTO);
-        profesorRepository.delete(profesor);
+        //Remove capacitaciones, titulos of this profesor
+        capacitacionRepository.deleteAllByProfesor_Dni(profesorDTO.getDni());
+        tituloRepository.deleteAllByProfesor_Dni(profesorDTO.getDni());
+
+        //Remove Profesor
+        profesorRepository.deleteById(profesorDTO.getId());
     }
 
     private Profesor mapProfesorDTOtoProfesorEntity(ProfesorDTO profesorDTO) {
@@ -48,9 +78,13 @@ public class ProfesorService {
         profesor.setTelefono(profesorDTO.getTelefono());
         profesor.setFecha_de_nacimiento(profesorDTO.getFecha_de_nacimiento());
         profesor.setSexo(profesorDTO.getSexo());
+        mapCursosDictados(profesorDTO, profesor);
 
+        return profesor;
+    }
 
-        if (null == profesor.getCursos_dictados()) {
+    private void mapCursosDictados(ProfesorDTO profesorDTO, Profesor profesor) {
+        if (profesor.getCursos_dictados() == null) {
             profesor.setCursos_dictados(new HashSet<>());
         }
 
@@ -58,9 +92,7 @@ public class ProfesorService {
             cursoRepository.findById(cursoID).ifPresent(
                     curso -> profesor.getCursos_dictados().add(curso)
             );
-
         });
-        return profesor;
     }
 
 }

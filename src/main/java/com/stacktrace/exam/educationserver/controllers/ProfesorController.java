@@ -68,8 +68,17 @@ public class ProfesorController {
             profesorToBeUpdated.getCursos_id().clear();
             profesorToBeUpdated.getCursos_id().addAll(profesorDTO.getCursos_id());
         }
+        if(profesorDTO.getTitulos() != null){
+            profesorToBeUpdated.getTitulos().clear();
+            profesorToBeUpdated.getTitulos().addAll(profesorDTO.getTitulos());
+        }
+        if(profesorDTO.getCapacitaciones() != null){
+            profesorToBeUpdated.getCapacitaciones().clear();
+            profesorToBeUpdated.getCapacitaciones().addAll(profesorDTO.getCapacitaciones());
+        }
 
-        ProfesorDTO updated = profesorService.saveProfesor(profesorToBeUpdated);
+
+        ProfesorDTO updated = profesorService.updateProfesor(profesorToBeUpdated);
 
         if ( updated == null) {
             return new ResponseEntity<>(new ResponseError(404, String.format("Profesor con dni %s No encontrado", profesorDTO.getDni())), HttpStatus.NOT_FOUND);
