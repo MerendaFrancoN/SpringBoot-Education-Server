@@ -1,5 +1,6 @@
 package com.stacktrace.exam.educationserver.service;
 
+import com.stacktrace.exam.educationserver.entities.Curso;
 import com.stacktrace.exam.educationserver.entities.DTOs.CursoDTO;
 import com.stacktrace.exam.educationserver.entities.DTOs.ProfesorDTO;
 import com.stacktrace.exam.educationserver.entities.Profesor;
@@ -63,6 +64,13 @@ public class ProfesorService {
         //Remove capacitaciones, titulos of this profesor
         capacitacionRepository.deleteAllByProfesor_Dni(profesorDTO.getDni());
         tituloRepository.deleteAllByProfesor_Dni(profesorDTO.getDni());
+
+        //If a professor was associated to a curso, remove it from them
+        Set<Curso> cursosOfProfesor = mapProfesorDTOtoProfesorEntity(profesorDTO).getCursos_dictados();
+        cursosOfProfesor.forEach(curso -> {
+            curso.setDictadoPor(null);
+            cursoRepository.save(curso);
+        });
 
         //Remove Profesor
         profesorRepository.deleteById(profesorDTO.getId());
