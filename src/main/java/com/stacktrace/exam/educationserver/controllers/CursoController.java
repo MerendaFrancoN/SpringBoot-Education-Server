@@ -1,5 +1,6 @@
 package com.stacktrace.exam.educationserver.controllers;
 
+import com.stacktrace.exam.educationserver.entities.DTOs.AlumnoDTO;
 import com.stacktrace.exam.educationserver.entities.DTOs.CursoDTO;
 import com.stacktrace.exam.educationserver.entities.ResponseError;
 import com.stacktrace.exam.educationserver.service.CursoService;
@@ -75,9 +76,9 @@ public class CursoController {
     @GetMapping(value = "/cursos/get_alumnos")
     @ResponseBody
     public Object searchAlumnos(@RequestParam("curso_id") Integer id) {
-        Optional<CursoDTO> cursoOptional = cursoService.getCurso(id);
-        if(cursoOptional.isPresent()){
-            return new ResponseEntity<>(cursoOptional.get(), HttpStatus.OK);
+        Optional<List<AlumnoDTO>> alumnosOfCurso = cursoService.getAlumnosOfCurso(id);
+        if(alumnosOfCurso.isPresent()){
+            return new ResponseEntity<>(alumnosOfCurso.get(), HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(new ResponseError

@@ -2,6 +2,7 @@ package com.stacktrace.exam.educationserver.service;
 
 import com.stacktrace.exam.educationserver.entities.Alumno;
 import com.stacktrace.exam.educationserver.entities.Curso;
+import com.stacktrace.exam.educationserver.entities.DTOs.AlumnoDTO;
 import com.stacktrace.exam.educationserver.entities.DTOs.CursoDTO;
 import com.stacktrace.exam.educationserver.repository.AlumnoRepository;
 import com.stacktrace.exam.educationserver.repository.CursoRepository;
@@ -27,9 +28,6 @@ public class CursoService {
     @Autowired
     private ProfesorRepository profesorRepository;
 
-    @Autowired
-    private NotaRepository notaRepository;
-
     public List<CursoDTO> getAll(){
        return cursoRepository.findAll().stream().map(CursoDTO::new).collect(Collectors.toList());
     }
@@ -46,6 +44,14 @@ public class CursoService {
 
     public void removeCurso(CursoDTO cursoDTO){
         cursoRepository.delete(mapCursoDTOtoCursoEntity(cursoDTO));
+    }
+
+    public Optional<List<AlumnoDTO>> getAlumnosOfCurso(int curso_id){
+        Optional<Curso> cursoOptional = cursoRepository.findById(curso_id);
+
+        return cursoOptional.map(curso -> curso.getAlumnosEnlistados().stream()
+                .map(AlumnoDTO::new).collect(Collectors.toList()));
+
     }
 
     private Curso mapCursoDTOtoCursoEntity(CursoDTO cursoDTO) {
