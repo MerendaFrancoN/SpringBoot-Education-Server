@@ -5,10 +5,12 @@ import com.stacktrace.exam.educationserver.entities.Curso;
 import com.stacktrace.exam.educationserver.entities.DTOs.AlumnoDTO;
 import com.stacktrace.exam.educationserver.entities.DTOs.CursoDTO;
 import com.stacktrace.exam.educationserver.repository.CursoRepository;
+import com.stacktrace.exam.educationserver.repository.NotaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.stacktrace.exam.educationserver.repository.AlumnoRepository;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +24,9 @@ public class AlumnoService {
 
     @Autowired
     CursoRepository cursoRepository;
+
+    @Autowired
+    NotaRepository notaRepository;
 
     public AlumnoDTO getAlumnoByDNI(String dni){
         return new AlumnoDTO(alumnoRepository.findByDni(dni));
@@ -38,8 +43,10 @@ public class AlumnoService {
         return new AlumnoDTO(alumnoRepository.save(alumno));
     }
 
+    @Transactional
     public void removeAlumno(AlumnoDTO alumnoDTO){
-        alumnoRepository.delete(mapAlumnoDTOtoAlumnoEntity(alumnoDTO));
+        notaRepository.deleteAllByAlumno_Dni(alumnoDTO.getDni());
+        alumnoRepository.deleteByDni(alumnoDTO.getDni());
     }
 
     public List<AlumnoDTO> getAlumnosAprobadosFromCurso(Integer curso_id){
