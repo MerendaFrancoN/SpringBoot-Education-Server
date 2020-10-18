@@ -58,7 +58,7 @@ public class CursoController {
             if(cursoReqBody.getProfesor_dni() != null)
                 cursoInDatabase.get().setProfesor_dni(cursoReqBody.getProfesor_dni());
 
-            CursoDTO updatedCurso = cursoService.saveUpdateCurso(cursoReqBody);
+            CursoDTO updatedCurso = cursoService.saveUpdateCurso(cursoInDatabase.get());
 
             if ( updatedCurso == null) {
                 return new ResponseEntity<>(
