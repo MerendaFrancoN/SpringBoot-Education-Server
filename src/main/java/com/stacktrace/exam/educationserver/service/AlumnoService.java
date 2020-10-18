@@ -45,6 +45,7 @@ public class AlumnoService {
 
     @Transactional
     public void removeAlumno(AlumnoDTO alumnoDTO){
+        //Remove notas of alumno, and then remove alumno from database
         notaRepository.deleteAllByAlumno_Dni(alumnoDTO.getDni());
         alumnoRepository.deleteByDni(alumnoDTO.getDni());
     }
