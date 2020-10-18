@@ -22,17 +22,16 @@ public class NotaController {
     @GetMapping(value = "/notas")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public List<NotaDTO> getAll(){
-        return notaService.getAll();
+    public ResponseEntity<List<NotaDTO>> getAll(){
+        return new ResponseEntity<>(notaService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/notas")
     @ResponseStatus(HttpStatus.CREATED)
-    public Object createNota(@RequestBody NotaDTO notaDTO) {
+    public ResponseEntity<Map<String, Object>> createNota(@RequestBody NotaDTO notaDTO) {
         Map<String, Object> mapResponse = new HashMap<>();
         mapResponse.put("id", notaService.saveUpdateNota(notaDTO).getId());
-        return  mapResponse;
-
+        return  new ResponseEntity<>(mapResponse, HttpStatus.CREATED);
     }
 
     @PutMapping("/notas")
@@ -42,6 +41,7 @@ public class NotaController {
         Optional<NotaDTO> notaToBeUpdated = notaService.getNotaById(notaDTO.getId());
 
         if ( notaToBeUpdated.isPresent()) {
+            //Validate input
             if(notaDTO.getNota() > 0) notaToBeUpdated.get().setNota(notaDTO.getNota());
             if(notaDTO.getAlumno_dni()!= null) notaToBeUpdated.get().setAlumno_dni(notaDTO.getAlumno_dni());
             if(notaDTO.getCurso_id()!= null) notaToBeUpdated.get().setCurso_id(notaDTO.getCurso_id());

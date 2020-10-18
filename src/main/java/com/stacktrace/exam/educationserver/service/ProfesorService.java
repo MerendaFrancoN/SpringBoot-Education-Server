@@ -1,5 +1,6 @@
 package com.stacktrace.exam.educationserver.service;
 
+import com.stacktrace.exam.educationserver.entities.DTOs.CursoDTO;
 import com.stacktrace.exam.educationserver.entities.DTOs.ProfesorDTO;
 import com.stacktrace.exam.educationserver.entities.Profesor;
 import com.stacktrace.exam.educationserver.repository.CapacitacionRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -64,6 +66,12 @@ public class ProfesorService {
 
         //Remove Profesor
         profesorRepository.deleteById(profesorDTO.getId());
+    }
+
+    public List<CursoDTO> getCursosOfProfesor(String profesorDTO_dni){
+        Profesor profesor = profesorRepository.findByDni(profesorDTO_dni);
+        return profesor.getCursos_dictados().stream()
+                .map(CursoDTO::new).collect(Collectors.toList());
     }
 
     private Profesor mapProfesorDTOtoProfesorEntity(ProfesorDTO profesorDTO) {

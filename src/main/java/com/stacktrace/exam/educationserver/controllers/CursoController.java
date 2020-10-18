@@ -18,16 +18,16 @@ public class CursoController {
     @GetMapping(value = "/cursos")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public List<CursoDTO> getAll(){
-        return cursoService.getAll();
+    public ResponseEntity<List<CursoDTO>> getAll(){
+        return new ResponseEntity<>(cursoService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/cursos")
     @ResponseStatus(HttpStatus.CREATED)
     public Object createCurso(@RequestBody CursoDTO curso) {
-        Map<String, Object> mapResponse = new HashMap<>();
-        mapResponse.put("id", cursoService.saveUpdateCurso(curso).getId());
-        return  mapResponse;
+        Map<String, Object> bodyReturn = new HashMap<>();
+        bodyReturn.put("id", cursoService.saveUpdateCurso(curso).getId());
+        return new ResponseEntity<>(bodyReturn, HttpStatus.CREATED);
     }
 
     @PutMapping("/cursos/")
@@ -77,7 +77,7 @@ public class CursoController {
     public Object searchAlumnos(@RequestParam("curso_id") Integer id) {
         Optional<CursoDTO> cursoOptional = cursoService.getCurso(id);
         if(cursoOptional.isPresent()){
-            return new ResponseEntity<>(cursoOptional.get().getAlumnos_dni(), HttpStatus.OK);
+            return new ResponseEntity<>(cursoOptional.get(), HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(new ResponseError

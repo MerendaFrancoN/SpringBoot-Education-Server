@@ -22,8 +22,8 @@ public class AlumnoController {
     @GetMapping(value = "/alumnos")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public List<AlumnoDTO> getAll(){
-        return alumnoService.getAll();
+    public ResponseEntity<List<AlumnoDTO>> getAll(){
+        return new ResponseEntity<>(alumnoService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/alumnos")
@@ -31,16 +31,15 @@ public class AlumnoController {
     public Object createAlumno(@RequestBody AlumnoDTO alumno) {
         Map<String, Object> mapResponse = new HashMap<>();
         mapResponse.put("dni", alumnoService.saveAlumno(alumno).getDni());
-        return  mapResponse;
-
+        return new ResponseEntity<>(mapResponse, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/alumnos/get_cursos")
     @ResponseBody
     public Object searchCursos(@RequestParam("dni") String dni) {
-        AlumnoDTO alumnoDTO = alumnoService.getAlumnoByDNI(dni);
-        if(alumnoDTO != null){
-            return new ResponseEntity<>(alumnoDTO.getCursos_id(), HttpStatus.OK);
+        List<CursoDTO> cursoDTOS = alumnoService.getCursosOfAlumno(dni);
+        if(cursoDTOS != null){
+            return new ResponseEntity<>(cursoDTOS, HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(new ResponseError
@@ -52,9 +51,9 @@ public class AlumnoController {
     @ResponseBody
     public Object updateAlumno(@RequestBody AlumnoDTO alumnoDTO) {
 
-        Map<String, Object> mapResponse = new HashMap<>();
         AlumnoDTO alumnoToBeUpdated = alumnoService.getAlumnoByDNI(alumnoDTO.getDni());
 
+        //Validate fields -- Improvable by using Spring Boot Validators
         if(alumnoDTO.getNombre() != null)
             alumnoToBeUpdated.setNombre(alumnoDTO.getNombre());
         if(alumnoDTO.getApellido() != null)

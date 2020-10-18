@@ -61,6 +61,11 @@ public class AlumnoService {
                 .collect(Collectors.toList());
     }
 
+    public List<CursoDTO> getCursosOfAlumno(String alumno_dni){
+        Alumno optionalAlumno = alumnoRepository.findByDni(alumno_dni);
+        return optionalAlumno.getCursos_tomados().stream().map(CursoDTO::new).collect(Collectors.toList());
+    }
+
     private Alumno mapAlumnoDTOtoAlumnoEntity(AlumnoDTO alumnoDTO) {
         Alumno alumno = new Alumno();
         alumno.setId(alumnoDTO.getId());
