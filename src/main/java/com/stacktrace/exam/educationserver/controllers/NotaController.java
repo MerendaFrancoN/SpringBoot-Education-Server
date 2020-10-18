@@ -1,6 +1,5 @@
 package com.stacktrace.exam.educationserver.controllers;
 
-import com.stacktrace.exam.educationserver.entities.DTOs.AlumnoDTO;
 import com.stacktrace.exam.educationserver.entities.DTOs.NotaDTO;
 import com.stacktrace.exam.educationserver.entities.ResponseError;
 import com.stacktrace.exam.educationserver.service.NotaService;

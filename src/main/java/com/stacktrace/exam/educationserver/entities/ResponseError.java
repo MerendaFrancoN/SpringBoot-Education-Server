@@ -10,7 +10,7 @@ public class ResponseError {
         this.message = msg;
     }
 
-    public void ResponseError() {
+    public ResponseError() {
         this.error = 500;
         this.message = "Internal Error";
     }

@@ -2,7 +2,6 @@ package com.stacktrace.exam.educationserver.entities.DTOs;
 
 import com.stacktrace.exam.educationserver.entities.Nota;
 
-
 public class NotaDTO {
 
     private long id;

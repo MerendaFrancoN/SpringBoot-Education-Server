@@ -1,9 +1,7 @@
 package com.stacktrace.exam.educationserver.entities.DTOs;
 
-import com.stacktrace.exam.educationserver.entities.Capacitacion;
 import com.stacktrace.exam.educationserver.entities.Curso;
 import com.stacktrace.exam.educationserver.entities.Profesor;
-import com.stacktrace.exam.educationserver.entities.Titulo;
 
 import java.util.HashSet;
 import java.util.LinkedList;

@@ -1,8 +1,6 @@
 package com.stacktrace.exam.educationserver.service;
 
-import com.stacktrace.exam.educationserver.entities.Alumno;
 import com.stacktrace.exam.educationserver.entities.Curso;
-import com.stacktrace.exam.educationserver.entities.DTOs.CursoDTO;
 import com.stacktrace.exam.educationserver.entities.DTOs.NotaDTO;
 import com.stacktrace.exam.educationserver.entities.Nota;
 import com.stacktrace.exam.educationserver.repository.AlumnoRepository;
@@ -11,7 +9,6 @@ import com.stacktrace.exam.educationserver.repository.NotaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

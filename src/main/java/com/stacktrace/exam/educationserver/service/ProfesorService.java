@@ -1,6 +1,5 @@
 package com.stacktrace.exam.educationserver.service;
 
-
 import com.stacktrace.exam.educationserver.entities.DTOs.ProfesorDTO;
 import com.stacktrace.exam.educationserver.entities.Profesor;
 import com.stacktrace.exam.educationserver.repository.CapacitacionRepository;
