@@ -11,9 +11,8 @@ import com.stacktrace.exam.educationserver.repository.ProfesorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import javax.transaction.Transactional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +26,9 @@ public class CursoService {
 
     @Autowired
     private ProfesorRepository profesorRepository;
+
+    @Autowired
+    private NotaRepository notaRepository;
 
     public List<CursoDTO> getAll(){
        return cursoRepository.findAll().stream().map(CursoDTO::new).collect(Collectors.toList());
@@ -42,8 +44,24 @@ public class CursoService {
         return new CursoDTO(curso);
     }
 
-    public void removeCurso(CursoDTO cursoDTO){
-        cursoRepository.delete(mapCursoDTOtoCursoEntity(cursoDTO));
+    @Transactional
+    public void removeCurso(Integer cursoId){
+
+        //Remove Notas
+        notaRepository.deleteAllByCurso_Id(cursoId);
+        //Remove Alumnos
+        Set<Alumno> alumnosEnlistados = new HashSet<>();
+        cursoRepository.findById(cursoId).ifPresent(curso -> alumnosEnlistados.addAll(curso.getAlumnosEnlistados()));
+        alumnosEnlistados.forEach(alumno -> {
+            alumno.getCursos_tomados().removeIf(curso -> curso.getId() == cursoId);
+            alumnoRepository.save(alumno);
+        });
+        //Remove Curso
+        cursoRepository.deleteById(cursoId);
+    }
+
+    public boolean exists(Integer curso_id){
+        return cursoRepository.existsById(curso_id);
     }
 
     public Optional<List<AlumnoDTO>> getAlumnosOfCurso(int curso_id){

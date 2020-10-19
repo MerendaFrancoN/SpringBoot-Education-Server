@@ -89,9 +89,8 @@ public class CursoController {
     @DeleteMapping(value="/cursos/{id}")
     @ResponseBody
     public Object removeCurso(@PathVariable Integer id) {
-        Optional<CursoDTO> cursoDTO = cursoService.getCurso(id);
-        if(cursoDTO.isPresent()){
-            cursoService.removeCurso(cursoDTO.get());
+        if(cursoService.exists(id)){
+            cursoService.removeCurso(id);
             return new ResponseEntity<>("", HttpStatus.OK);
         }
         else
