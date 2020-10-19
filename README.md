@@ -3,6 +3,7 @@ Java - Springboot Application - CRUD Server application
 
  - Localhost - 8888
  - Database - H2
+ - Init SQL Schema - /resources/schema.sql
  - Init SQL Data - /resources/data.sql
  
 #### Assumptions
