@@ -49,9 +49,11 @@ public class NotaService {
         return optionalNota.map(NotaDTO::new);
     }
 
-    public void removeNota(NotaDTO notaDTO){
-        notaRepository.delete(mapNotaDTOtoNota(notaDTO));
+    public void removeNota(long id){
+        notaRepository.deleteById(id);
     }
+
+    public boolean exists(long id){return notaRepository.existsById(id);}
 
     private Nota mapNotaDTOtoNota(NotaDTO notaDTO) {
         Nota nota = new Nota();

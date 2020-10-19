@@ -56,9 +56,8 @@ public class NotaController {
     @DeleteMapping(value = "/notas/{id}")
     @ResponseBody
     public Object removeNota(@PathVariable Long id) {
-        Optional<NotaDTO> notaDTO = notaService.getNotaById(id);
-        if(notaDTO.isPresent()){
-            notaService.removeNota(notaDTO.get());
+        if(notaService.exists(id)){
+            notaService.removeNota(id);
             return new ResponseEntity<>("",HttpStatus.OK);
         }else
             return new ResponseEntity<>(new ResponseError
