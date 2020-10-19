@@ -14,8 +14,6 @@ public class AlumnoDTO extends PersonaDTO{
 
     private Set<Integer> cursos_id = new HashSet<>();
 
-    private List<Long> notas_id = new LinkedList<>();
-
     public AlumnoDTO(){}
     public AlumnoDTO(Alumno alumno){
         super();
@@ -30,11 +28,6 @@ public class AlumnoDTO extends PersonaDTO{
         super.setSexo(alumno.getSexo());
         this.getCursos_id().addAll(alumno.getCursos_tomados()
                 .stream().map(Curso::getId).collect(Collectors.toSet()));
-
-        if(alumno.getLista_notas() != null) {
-            this.getNotas_id().addAll(alumno.getLista_notas()
-                .stream().map(Nota::getId).collect(Collectors.toList()));
-        }
     }
 
     public Set<Integer> getCursos_id() {
@@ -43,13 +36,5 @@ public class AlumnoDTO extends PersonaDTO{
 
     public void setCursos_id(Set<Integer> cursos_id) {
         this.cursos_id = cursos_id;
-    }
-
-    public List<Long> getNotas_id() {
-        return notas_id;
-    }
-
-    public void setNotas_id(List<Long> notas_id) {
-        this.notas_id = notas_id;
     }
 }
