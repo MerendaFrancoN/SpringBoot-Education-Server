@@ -40,6 +40,7 @@ public class CursoService {
     }
 
     public CursoDTO saveUpdateCurso(CursoDTO cursoDTO) {
+        unscribeAlumnosFromCurso(cursoDTO.getId());
         Curso curso = cursoRepository.save(mapCursoDTOtoCursoEntity(cursoDTO));
         return new CursoDTO(curso);
     }
@@ -50,14 +51,18 @@ public class CursoService {
         //Remove Notas
         notaRepository.deleteAllByCurso_Id(cursoId);
         //Remove Alumnos
+        unscribeAlumnosFromCurso(cursoId);
+        //Remove Curso
+        cursoRepository.deleteById(cursoId);
+    }
+
+    private void unscribeAlumnosFromCurso(Integer cursoId) {
         Set<Alumno> alumnosEnlistados = new HashSet<>();
         cursoRepository.findById(cursoId).ifPresent(curso -> alumnosEnlistados.addAll(curso.getAlumnosEnlistados()));
         alumnosEnlistados.forEach(alumno -> {
             alumno.getCursos_tomados().removeIf(curso -> curso.getId() == cursoId);
             alumnoRepository.save(alumno);
         });
-        //Remove Curso
-        cursoRepository.deleteById(cursoId);
     }
 
     public boolean exists(Integer curso_id){
@@ -93,6 +98,7 @@ public class CursoService {
         cursoDTO.getAlumnos_dni().forEach(alumnoDNI -> {
             Alumno alumno = alumnoRepository.findByDni(alumnoDNI);
             alumno.getCursos_tomados().add(curso);
+            curso.getAlumnosEnlistados().add(alumno);
         });
         return curso;
     }

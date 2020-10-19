@@ -47,12 +47,10 @@ public class CursoController {
             if(cursoReqBody.getNota_aprobacion() > 0)
                 cursoInDatabase.get().setNota_aprobacion(cursoReqBody.getNota_aprobacion());
             if(cursoReqBody.getAlumnos_dni() != null){
-                //Remove alumnos that are already in the course to prevent errors
-                cursoReqBody.getAlumnos_dni().removeAll(cursoInDatabase.get().getAlumnos_dni());
                 //Clean alumnos
                 cursoInDatabase.get().getAlumnos_dni().clear();
                 //Add updated ones
-                cursoInDatabase.get().getAlumnos_dni().addAll(cursoInDatabase.get().getAlumnos_dni());
+                cursoInDatabase.get().getAlumnos_dni().addAll(cursoReqBody.getAlumnos_dni());
             }
 
             if(cursoReqBody.getProfesor_dni() != null)
