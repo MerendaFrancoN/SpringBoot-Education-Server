@@ -6,6 +6,12 @@ Java - Springboot Application - CRUD Server application
  - Init SQL Schema - /resources/schema.sql
  - Init SQL Data - /resources/data.sql
  
+#### To Improve
+ - Add Tests
+ - Add Pagination
+ - Add Cache
+ - Add Validator of inputs
+ 
 #### Assumptions
 - Profesor can dictate one or more Cursos but a Curso can be dictated by a single Profesor.
 
