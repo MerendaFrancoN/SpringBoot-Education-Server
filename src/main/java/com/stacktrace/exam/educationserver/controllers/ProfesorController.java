@@ -66,9 +66,8 @@ public class ProfesorController {
     @DeleteMapping(value = "/profesores/{dni}")
     @ResponseBody
     public Object removeProfesor(@PathVariable String dni) {
-        ProfesorDTO profesorDTO = profesorService.getProfesor(dni);
-        if(profesorDTO != null){
-            profesorService.removeProfesor(profesorDTO);
+        if(profesorService.exists(dni)){
+            profesorService.removeProfesor(dni);
             return new ResponseEntity<>("", HttpStatus.OK);
         }
         else

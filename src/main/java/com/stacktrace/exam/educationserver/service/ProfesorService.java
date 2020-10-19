@@ -60,26 +60,30 @@ public class ProfesorService {
     }
 
     @Transactional
-    public void removeProfesor(ProfesorDTO profesorDTO){
+    public void removeProfesor(String dni){
         //Remove capacitaciones, titulos of this profesor
-        capacitacionRepository.deleteAllByProfesor_Dni(profesorDTO.getDni());
-        tituloRepository.deleteAllByProfesor_Dni(profesorDTO.getDni());
+        capacitacionRepository.deleteAllByProfesor_Dni(dni);
+        tituloRepository.deleteAllByProfesor_Dni(dni);
 
         //If a professor was associated to a curso, remove it from them
-        Set<Curso> cursosOfProfesor = mapProfesorDTOtoProfesorEntity(profesorDTO).getCursos_dictados();
+        Set<Curso> cursosOfProfesor = profesorRepository.findByDni(dni).getCursos_dictados();
         cursosOfProfesor.forEach(curso -> {
             curso.setDictadoPor(null);
             cursoRepository.save(curso);
         });
 
         //Remove Profesor
-        profesorRepository.deleteById(profesorDTO.getId());
+        profesorRepository.deleteByDni(dni);
     }
 
     public List<CursoDTO> getCursosOfProfesor(String profesorDTO_dni){
         Profesor profesor = profesorRepository.findByDni(profesorDTO_dni);
         return profesor.getCursos_dictados().stream()
                 .map(CursoDTO::new).collect(Collectors.toList());
+    }
+
+    public boolean exists(String profesor_dni){
+        return profesorRepository.existsByDni(profesor_dni);
     }
 
     private Profesor mapProfesorDTOtoProfesorEntity(ProfesorDTO profesorDTO) {

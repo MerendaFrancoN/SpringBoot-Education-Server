@@ -6,4 +6,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface ProfesorRepository extends JpaRepository<Profesor, Long> {
     Profesor findByDni(@Param("dni") String dni);
+    public boolean existsByDni(String dni);
+    public void deleteByDni(String dni);
 }
