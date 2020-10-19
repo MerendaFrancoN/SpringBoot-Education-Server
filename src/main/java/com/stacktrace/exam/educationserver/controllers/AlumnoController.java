@@ -83,9 +83,8 @@ public class AlumnoController {
     @DeleteMapping(value = "/alumnos/{dni}")
     @ResponseBody
     public Object removeAlumno(@PathVariable String dni) {
-        AlumnoDTO alumnoDTO = alumnoService.getAlumnoByDNI(dni);
-        if(alumnoDTO != null){
-            alumnoService.removeAlumno(alumnoDTO);
+        if(alumnoService.exists(dni)){
+            alumnoService.removeAlumno(dni);
             return new ResponseEntity<>("", HttpStatus.OK);
         }
         else

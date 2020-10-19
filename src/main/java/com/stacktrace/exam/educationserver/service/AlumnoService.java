@@ -44,10 +44,10 @@ public class AlumnoService {
     }
 
     @Transactional
-    public void removeAlumno(AlumnoDTO alumnoDTO){
+    public void removeAlumno(String dni){
         //Remove notas of alumno, and then remove alumno from database
-        notaRepository.deleteAllByAlumno_Dni(alumnoDTO.getDni());
-        alumnoRepository.deleteByDni(alumnoDTO.getDni());
+        notaRepository.deleteAllByAlumno_Dni(dni);
+        alumnoRepository.deleteByDni(dni);
     }
 
     public List<AlumnoDTO> getAlumnosAprobadosFromCurso(Integer curso_id){
@@ -72,6 +72,10 @@ public class AlumnoService {
     public List<CursoDTO> getCursosOfAlumno(String alumno_dni){
         Alumno optionalAlumno = alumnoRepository.findByDni(alumno_dni);
         return optionalAlumno.getCursos_tomados().stream().map(CursoDTO::new).collect(Collectors.toList());
+    }
+
+    public boolean exists(String alumno_dni){
+        return alumnoRepository.existsByDni(alumno_dni);
     }
 
     private Alumno mapAlumnoDTOtoAlumnoEntity(AlumnoDTO alumnoDTO) {

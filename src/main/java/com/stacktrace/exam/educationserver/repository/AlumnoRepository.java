@@ -7,4 +7,5 @@ import org.springframework.data.repository.query.Param;
 public interface AlumnoRepository extends JpaRepository<Alumno, Integer> {
     Alumno findByDni(@Param("dni") String dni);
     public void deleteByDni(String dni);
+    public boolean existsByDni(String dni);
 }
